@@ -1,42 +1,76 @@
+// src/pages/Dashboard/CEODashboard.tsx
 import { useEffect, useState } from "react";
-import { supabase } from "../supabase";
-import { Database } from "../types/supabase";
+import { supabase } from "../../supabaseClient";
+import { Database } from "../../types/supabase";
 
-type SaleSummary = Database["public"]["Views"]["sales_summary"]["Row"];
+type Sale = Database["public"]["Tables"]["sales"]["Row"];
+type Product = Database["public"]["Tables"]["products"]["Row"];
 
-export default function CeoDashboard() {
-  const [summary, setSummary] = useState<SaleSummary[]>([]);
+export default function CEODashboard() {
+  const [sales, setSales] = useState<Sale[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchSummary();
+    const fetchData = async () => {
+      setLoading(true);
+
+      const { data: salesData, error: salesError } = await supabase
+        .from("sales")
+        .select("*");
+
+      if (salesError) console.error(salesError);
+      if (salesData) setSales(salesData);
+
+      const { data: productsData, error: prodError } = await supabase
+        .from("products")
+        .select("*");
+
+      if (prodError) console.error(prodError);
+      if (productsData) setProducts(productsData);
+
+      setLoading(false);
+    };
+
+    fetchData();
   }, []);
 
-  const fetchSummary = async () => {
-    const { data } = await supabase.from("sales_summary").select("*");
-    setSummary(data || []); // Type-safe fallback
+  const calculateVAT = (amount: number) => amount * 0.15;
+  const calculatePlasticBagLevy = (items: Product[]) => {
+    const bagCount = items.filter((p) => p.name.toLowerCase().includes("plastic bag")).length;
+    return bagCount * 1;
   };
+
+  const totalRevenue = sales.reduce((sum, s) => sum + s.total_price, 0);
+  const vatTotal = calculateVAT(totalRevenue);
+  const bagLevy = calculatePlasticBagLevy(products);
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">CEO Dashboard</h1>
-      <table className="table-auto w-full border-collapse border border-gray-300">
-        <thead>
-          <tr>
-            <th className="border px-2 py-1">Date</th>
-            <th className="border px-2 py-1">Total Sales</th>
-            <th className="border px-2 py-1">Total VAT</th>
-          </tr>
-        </thead>
-        <tbody>
-          {summary.map((s) => (
-            <tr key={s.date}>
-              <td className="border px-2 py-1">{s.date}</td>
-              <td className="border px-2 py-1">N${s.total_sales}</td>
-              <td className="border px-2 py-1">N${s.total_vat}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {loading && <p>Loading...</p>}
+
+      {!loading && (
+        <>
+          <h2 className="text-xl font-semibold mb-2">Total Revenue</h2>
+          <p>N${totalRevenue.toFixed(2)}</p>
+
+          <h2 className="text-xl font-semibold mb-2">VAT Collected (15%)</h2>
+          <p>N${vatTotal.toFixed(2)}</p>
+
+          <h2 className="text-xl font-semibold mb-2">Plastic Bag Levy</h2>
+          <p>N${bagLevy.toFixed(2)}</p>
+
+          <h2 className="text-xl font-semibold mb-2">Sales Details</h2>
+          <ul>
+            {sales.map((s) => (
+              <li key={s.id}>
+                Sale ID: {s.id} - Total: N${s.total_price.toFixed(2)}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 }

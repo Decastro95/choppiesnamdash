@@ -1,99 +1,134 @@
-import { useState, useEffect } from "react";
-import { supabase } from "../supabase";
-import type { Database } from "../types/supabase";
+// src/pages/Dashboard/CashierDashboard.tsx
+import { useEffect, useState } from "react";
+import { supabase } from "../../supabaseClient";
+import { Database } from "../../types/supabase";
 
 type Product = Database["public"]["Tables"]["products"]["Row"];
 type Sale = Database["public"]["Tables"]["sales"]["Row"];
 
-const VAT_RATE = 0.15; // 15% VAT
-const PLASTIC_BAG_LEVY = 1.0; // N$1 per bag
-
 export default function CashierDashboard() {
-  const [cart, setCart] = useState<{ product: Product; quantity: number }[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-  const [total, setTotal] = useState(0);
+  const [cart, setCart] = useState<Product[]>([]);
+  const [sales, setSales] = useState<Sale[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const ZERO_RATED = ["maize meal", "bread", "mahango", "fresh milk"];
 
   useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      const { data: prodData, error: prodError } = await supabase
+        .from("products")
+        .select("*");
+      if (prodError) console.error(prodError);
+      if (prodData) setProducts(prodData);
+
+      const { data: salesData, error: salesError } = await supabase
+        .from("sales")
+        .select("*");
+      if (salesError) console.error(salesError);
+      if (salesData) setSales(salesData);
+
+      setLoading(false);
+    };
+
     fetchProducts();
   }, []);
 
-  const fetchProducts = async () => {
-    const { data } = await supabase.from("products").select("*");
-    setProducts(data || []);
+  // Add product to cart
+  const addToCart = (product: Product) => setCart([...cart, product]);
+
+  // Remove product from cart (return item)
+  const removeFromCart = (productId: number) => {
+    setCart((prev) => prev.filter((p) => p.id !== productId));
   };
 
-  const addToCart = (product: Product) => {
-    setCart((prev) => {
-      const index = prev.findIndex((p) => p.product.id === product.id);
-      if (index > -1) {
-        const updated = [...prev];
-        updated[index].quantity += 1;
-        return updated;
-      }
-      return [...prev, { product, quantity: 1 }];
-    });
-  };
-
-  const calculateTotal = () => {
+  // Calculate total
+  const calculateTotals = () => {
     let subtotal = 0;
-    let vatTotal = 0;
+    let vat = 0;
+    let bagLevy = 0;
 
-    cart.forEach(({ product, quantity }) => {
-      let price = Number(product.price || 0);
-      const isZeroRated = ["maize meal", "mahango", "bread"].some((z) =>
-        product.name.toLowerCase().includes(z)
-      );
-
-      if (!isZeroRated) vatTotal += price * quantity * VAT_RATE;
-      subtotal += price * quantity;
+    cart.forEach((item) => {
+      subtotal += item.price;
+      if (!ZERO_RATED.includes(item.name.toLowerCase())) {
+        vat += item.price * 0.15;
+      }
+      if (item.name.toLowerCase().includes("plastic bag")) bagLevy += 1;
     });
 
-    const bagLevy = cart.length ? PLASTIC_BAG_LEVY : 0;
-    setTotal(subtotal + vatTotal + bagLevy);
+    const total = subtotal + vat + bagLevy;
+    return { subtotal, vat, bagLevy, total };
   };
 
-  useEffect(() => calculateTotal(), [cart]);
+  const { subtotal, vat, bagLevy, total } = calculateTotals();
 
-  const returnItem = async (saleId: number) => {
-    // Add record to `returns` table
-    await supabase.from("returns").insert([{ sale_id: saleId }]);
-    // Triggers will increase stock automatically
+  // Checkout
+  const checkout = async () => {
+    for (const item of cart) {
+      const { error } = await supabase.from("sales").insert({
+        product_id: item.id,
+        total_price: item.price,
+        created_at: new Date(),
+      });
+      if (error) console.error(error);
+    }
+    alert(`Sale completed. Total: N$${total.toFixed(2)}`);
+    setCart([]);
   };
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Cashier POS</h1>
-      <div className="grid grid-cols-3 gap-4">
-        {products.map((p) => (
-          <div key={p.id} className="border p-2 rounded shadow">
-            <h2 className="font-semibold">{p.name}</h2>
+      <h1 className="text-2xl font-bold mb-4">Cashier Dashboard</h1>
+      {loading && <p>Loading products...</p>}
+
+      {!loading && (
+        <>
+          <h2 className="text-xl font-semibold mb-2">Products</h2>
+          <ul className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            {products.map((p) => (
+              <li key={p.id} className="border p-2 rounded">
+                <div>{p.name}</div>
+                <div>N${p.price.toFixed(2)}</div>
+                <button
+                  className="mt-2 px-2 py-1 bg-blue-500 text-white rounded"
+                  onClick={() => addToCart(p)}
+                >
+                  Add to Cart
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          <h2 className="text-xl font-semibold mt-4 mb-2">Cart</h2>
+          <ul>
+            {cart.map((c) => (
+              <li key={c.id} className="flex justify-between items-center">
+                {c.name} - N${c.price.toFixed(2)}
+                <button
+                  className="ml-2 px-2 py-1 bg-red-500 text-white rounded"
+                  onClick={() => removeFromCart(c.id)}
+                >
+                  Return
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-4">
+            <p>Subtotal: N${subtotal.toFixed(2)}</p>
+            <p>VAT (15%): N${vat.toFixed(2)}</p>
+            <p>Plastic Bag Levy: N${bagLevy.toFixed(2)}</p>
+            <p className="font-bold">Total: N${total.toFixed(2)}</p>
             <button
-              onClick={() => addToCart(p)}
-              className="mt-2 px-2 py-1 bg-blue-500 text-white rounded"
+              className="mt-2 px-4 py-2 bg-green-600 text-white rounded"
+              onClick={checkout}
             >
-              Add
+              Checkout
             </button>
           </div>
-        ))}
-      </div>
-
-      <div className="mt-6">
-        <h2 className="text-xl font-bold">Cart</h2>
-        {cart.map(({ product, quantity }) => (
-          <div key={product.id}>
-            {product.name} x {quantity}
-          </div>
-        ))}
-        <div className="mt-2 font-bold">Total: N${total.toFixed(2)}</div>
-        {cart.length > 0 && (
-          <button
-            onClick={() => alert("Checkout implemented")}
-            className="mt-2 px-4 py-2 bg-green-600 text-white rounded"
-          >
-            Checkout
-          </button>
-        )}
-      </div>
+        </>
+      )}
     </div>
   );
 }

@@ -1,14 +1,15 @@
+// src/App.tsx
 import { useEffect, useState, ReactNode } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { supabase } from "./supabaseClient";
 import { Database } from "./types/supabase";
 
 // Dashboards
-import CashierDashboard from "./pages/CashierDashboard";
-import ManagerDashboard from "./pages/ManagerDashboard";
-import AdminDashboard from "./pages/AdminDashboard";
-import CEODashboard from "./pages/CEODashboard";
-import SupplierDashboard from "./pages/SupplierDashboard";
+import CashierDashboard from "./pages/Dashboard/CashierDashboard";
+import ManagerDashboard from "./pages/Dashboard/ManagerDashboard";
+import AdminDashboard from "./pages/Dashboard/AdminDashboard";
+import CEODashboard from "./pages/Dashboard/CEODashboard";
+import SupplierDashboard from "./pages/Dashboard/SupplierDashboard";
 
 // Components
 import Navbar from "./components/Navbar";
@@ -21,8 +22,8 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   const fetchUser = async () => {
-    const session = supabase.auth.getSession();
-    const currentUser = (await session).data.session?.user;
+    const { data: { session } } = await supabase.auth.getSession();
+    const currentUser = session?.user;
     if (!currentUser) {
       setUser(null);
       setLoading(false);
@@ -41,22 +42,17 @@ const App = () => {
 
   useEffect(() => {
     fetchUser();
-
     const { data: listener } = supabase.auth.onAuthStateChange(() => {
       fetchUser();
     });
-
-    return () => {
-      listener.subscription.unsubscribe();
-    };
+    return () => listener.subscription.unsubscribe();
   }, []);
 
   if (loading) return <p>Loading...</p>;
 
   const ProtectedRoute = ({ children, roles }: { children: ReactNode; roles: string[] }) => {
     if (!user) return <Navigate to="/login" replace />;
-    // Assuming user.role_id corresponds to roles array
-    const allowedRoles = roles;
+
     const roleNameMap: Record<number, string> = {
       1: "Admin",
       2: "Manager",
@@ -65,7 +61,7 @@ const App = () => {
       5: "Supplier",
     };
     const currentRole = roleNameMap[user.role_id];
-    if (!allowedRoles.includes(currentRole)) return <Navigate to="/unauthorized" replace />;
+    if (!roles.includes(currentRole)) return <Navigate to="/unauthorized" replace />;
 
     return <>{children}</>;
   };
@@ -74,6 +70,10 @@ const App = () => {
     <Router>
       <Navbar />
       <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<p>Login Page</p>} />
+        <Route path="/unauthorized" element={<p>Unauthorized Access</p>} />
+
         <Route
           path="/cashier"
           element={
@@ -114,10 +114,6 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<p>Login Page here</p>} />
-        <Route path="/unauthorized" element={<p>Unauthorized Access</p>} />
       </Routes>
     </Router>
   );

@@ -1,42 +1,86 @@
 // src/pages/Dashboard/ManagerDashboard.tsx
-import { useEffect } from "react";
-import { useLowStockAlerts } from "../../hooks/useLowStockAlerts";
+import { useEffect, useState } from "react";
+import { supabase } from "../../supabaseClient";
+import { Database } from "../../types/supabase";
 
-const ManagerDashboard = () => {
-  const { alerts, loading } = useLowStockAlerts();
+type Product = Database["public"]["Tables"]["products"]["Row"];
+type Sale = Database["public"]["Tables"]["sales"]["Row"];
+
+export default function ManagerDashboard() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [sales, setSales] = useState<Sale[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const ZERO_RATED = ["maize meal", "bread", "mahango", "fresh milk"];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const { data: prodData, error: prodError } = await supabase
+        .from("products")
+        .select("*");
+      if (prodError) console.error(prodError);
+      if (prodData) setProducts(prodData);
+
+      const { data: salesData, error: salesError } = await supabase
+        .from("sales")
+        .select("*");
+      if (salesError) console.error(salesError);
+      if (salesData) setSales(salesData);
+
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  const calculateTotals = () => {
+    let subtotal = 0;
+    let vat = 0;
+    let bagLevy = 0;
+
+    sales.forEach((sale) => {
+      const product = products.find((p) => p.id === sale.product_id);
+      if (!product) return;
+      subtotal += product.price;
+      if (!ZERO_RATED.includes(product.name.toLowerCase())) {
+        vat += product.price * 0.15;
+      }
+      if (product.name.toLowerCase().includes("plastic bag")) bagLevy += 1;
+    });
+
+    return { subtotal, vat, bagLevy, total: subtotal + vat + bagLevy };
+  };
+
+  const { subtotal, vat, bagLevy, total } = calculateTotals();
 
   return (
-    <div className="p-6">
+    <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Manager Dashboard</h1>
+      {loading && <p>Loading data...</p>}
 
-      <section className="mb-6">
-        <h2 className="text-xl font-semibold mb-2">Low Stock Alerts</h2>
-        {loading ? (
-          <p>Loading...</p>
-        ) : alerts.length === 0 ? (
-          <p className="text-green-600">All products are sufficiently stocked.</p>
-        ) : (
-          <ul className="space-y-2">
-            {alerts.map(alert => (
-              <li
-                key={alert.id}
-                className="p-2 border rounded bg-red-50 flex justify-between items-center"
-              >
-                <span>
-                  Product: <strong>{alert.product_id}</strong> - Qty: {alert.current_quantity}
-                </span>
-                <span className="text-gray-500 text-sm">
-                  {new Date(alert.alert_date).toLocaleString()}
-                </span>
-              </li>
-            ))}
+      {!loading && (
+        <>
+          <h2 className="text-xl font-semibold mb-2">Sales Overview</h2>
+          <ul>
+            {sales.map((s) => {
+              const product = products.find((p) => p.id === s.product_id);
+              return (
+                <li key={s.id}>
+                  {product?.name || "Unknown"} - N${product?.price.toFixed(2)}
+                </li>
+              );
+            })}
           </ul>
-        )}
-      </section>
 
-      {/* Additional manager sections like sales, inventory, etc. */}
+          <div className="mt-4">
+            <p>Subtotal: N${subtotal.toFixed(2)}</p>
+            <p>VAT (15%): N${vat.toFixed(2)}</p>
+            <p>Plastic Bag Levy: N${bagLevy.toFixed(2)}</p>
+            <p className="font-bold">Total Sales: N${total.toFixed(2)}</p>
+          </div>
+        </>
+      )}
     </div>
   );
-};
-
-export default ManagerDashboard;
+}

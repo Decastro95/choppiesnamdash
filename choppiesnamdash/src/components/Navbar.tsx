@@ -1,48 +1,63 @@
 // src/components/Navbar.tsx
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 
-interface NavbarProps {
-  role: string | null;
-}
+type Role = "Admin" | "Manager" | "Cashier" | "CEO" | "Supplier";
 
-export default function Navbar({ role }: NavbarProps) {
-  const [userRole, setUserRole] = useState<string | null>(role);
+export default function Navbar() {
+  const [role, setRole] = useState<Role | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setUserRole(role);
-  }, [role]);
+    const getUserRole = async () => {
+      const user = supabase.auth.user();
+      if (!user) return navigate("/login");
 
-  const linksByRole: Record<string, { name: string; path: string }[]> = {
-    Admin: [
-      { name: "Admin Dashboard", path: "/dashboard/admin" },
-      { name: "Manager Dashboard", path: "/dashboard/manager" },
-      { name: "Cashier Dashboard", path: "/dashboard/cashier" },
-      { name: "CEO Dashboard", path: "/dashboard/ceo" },
-      { name: "Supplier Dashboard", path: "/dashboard/supplier" },
-    ],
-    Manager: [
-      { name: "Manager Dashboard", path: "/dashboard/manager" },
-      { name: "Cashier Dashboard", path: "/dashboard/cashier" },
-    ],
-    Cashier: [{ name: "Cashier Dashboard", path: "/dashboard/cashier" }],
-    CEO: [{ name: "CEO Dashboard", path: "/dashboard/ceo" }],
-    Supplier: [{ name: "Supplier Dashboard", path: "/dashboard/supplier" }],
+      const { data, error } = await supabase
+        .from("users")
+        .select("role_id, roles(name)")
+        .eq("id", user.id)
+        .single();
+
+      if (error) console.error(error);
+      if (data?.roles?.name) setRole(data.roles.name as Role);
+    };
+
+    getUserRole();
+  }, [navigate]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/login");
   };
 
-  const links = userRole ? linksByRole[userRole] || [] : [];
-
   return (
-    <nav className="bg-gray-800 text-white p-4 flex space-x-4">
-      {links.map((link) => (
-        <a
-          key={link.path}
-          href={link.path}
-          className="hover:bg-gray-700 px-3 py-2 rounded"
-        >
-          {link.name}
-        </a>
-      ))}
+    <nav className="bg-blue-600 text-white p-4 flex justify-between items-center">
+      <div className="flex space-x-4">
+        <Link to="/" className="font-bold">
+          Choppies POS
+        </Link>
+
+        {role === "Admin" && (
+          <>
+            <Link to="/admin">Admin Dashboard</Link>
+            <Link to="/manager">Manager Dashboard</Link>
+            <Link to="/ceo">CEO Dashboard</Link>
+            <Link to="/supplier">Supplier Dashboard</Link>
+            <Link to="/cashier">Cashier POS</Link>
+          </>
+        )}
+
+        {role === "Manager" && <Link to="/manager">Manager Dashboard</Link>}
+        {role === "Cashier" && <Link to="/cashier">Cashier POS</Link>}
+        {role === "CEO" && <Link to="/ceo">CEO Dashboard</Link>}
+        {role === "Supplier" && <Link to="/supplier">Supplier Dashboard</Link>}
+      </div>
+
+      <button onClick={handleLogout} className="bg-red-500 px-3 py-1 rounded">
+        Logout
+      </button>
     </nav>
   );
 }
