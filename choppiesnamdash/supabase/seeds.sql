@@ -1,87 +1,121 @@
--- Reset schema
-DROP SCHEMA public CASCADE;
-CREATE SCHEMA public;
+-- ============================================
+-- SHOPS
+-- ============================================
+INSERT INTO shops (name, location, phone, email)
+VALUES
+('Choppies Omuthiya', 'Omuthiya', '0812345678', 'omuthiya@choppies.co.na'),
+('Choppies Rosh Pinah', 'Rosh Pinah', '0812345679', 'pinah@choppies.co.na'),
+('Choppies Delhi', 'Delhi', '0812345680', 'delhi@choppies.co.na')
+ON CONFLICT(name) DO NOTHING;
 
--- ======================
--- TABLES
--- ======================
-CREATE TABLE roles (
-    id SERIAL PRIMARY KEY,
-    name TEXT UNIQUE NOT NULL
-);
+-- ============================================
+-- ROLES
+-- ============================================
+INSERT INTO roles (name)
+VALUES
+('Admin'),
+('Manager'),
+('Cashier'),
+('CEO'),
+('Supplier')
+ON CONFLICT(name) DO NOTHING;
 
-CREATE TABLE shops (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    location TEXT,
-    phone TEXT,
-    email TEXT
-);
-
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    shop_id INT REFERENCES shops(id) ON DELETE CASCADE,
-    role_id INT REFERENCES roles(id) ON DELETE CASCADE,
-    email TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
-);
-
-CREATE TABLE categories (
-    id SERIAL PRIMARY KEY,
-    name TEXT UNIQUE NOT NULL
-);
-
-CREATE TABLE products (
-    id SERIAL PRIMARY KEY,
-    product_id TEXT UNIQUE NOT NULL,
-    name TEXT NOT NULL,
-    category_id INT REFERENCES categories(id) ON DELETE SET NULL,
-    expiration_days INT,
-    damage_status TEXT
-);
-
--- ======================
--- SEED ROLES
--- ======================
-INSERT INTO roles (name) VALUES 
-('Admin'), ('Manager'), ('Cashier')
-ON CONFLICT (name) DO NOTHING;
-
--- ======================
--- SEED SHOPS
--- ======================
-INSERT INTO shops (name, location, phone, email) VALUES
-('Choppies Omuthiya','Shop No:5, Omuthiya Shopping Centre, Erf 77, Main Street, Omuthiya','264814000000','omuthiya@choppies.co.na'),
-('Choppies Rosh Pinah','Shop 1, Rosh Pinah Shopping Centre, 174 Lood street, Rosh Pinah','264815000000','roshpinah@choppies.co.na')
-ON CONFLICT (name) DO NOTHING;
-
--- ======================
--- SEED USERS
--- ======================
+-- ============================================
+-- USERS
+-- ============================================
 INSERT INTO users (shop_id, role_id, email, password)
 SELECT s.id, r.id, u.email, 'password123'
 FROM (
   VALUES
-    ('Choppies Omuthiya','manager.omuthiya@choppies.co.na','Manager'),
-    ('Choppies Omuthiya','admin.omuthiya@choppies.co.na','Admin'),
-    ('Choppies Omuthiya','cashier.omuthiya@choppies.co.na','Cashier'),
-    ('Choppies Rosh Pinah','manager.pinah@choppies.co.na','Manager'),
-    ('Choppies Rosh Pinah','admin.pinah@choppies.co.na','Admin'),
-    ('Choppies Rosh Pinah','cashier.pinah@choppies.co.na','Cashier')
-) AS u(shop_name,email,role_name)
+    ('Choppies Omuthiya','Manager','manager.omuthiya@choppies.co.na'),
+    ('Choppies Omuthiya','Admin','admin.omuthiya@choppies.co.na'),
+    ('Choppies Omuthiya','Cashier','cashier.omuthiya@choppies.co.na'),
+    ('Choppies Rosh Pinah','Manager','manager.pinah@choppies.co.na'),
+    ('Choppies Rosh Pinah','Admin','admin.pinah@choppies.co.na'),
+    ('Choppies Rosh Pinah','Cashier','cashier.pinah@choppies.co.na'),
+    ('Choppies Delhi','Manager','manager.delhi@choppies.co.na'),
+    ('Choppies Delhi','Admin','admin.delhi@choppies.co.na'),
+    ('Choppies Delhi','Cashier','cashier.delhi@choppies.co.na')
+) AS u(shop_name, role_name, email)
 JOIN shops s ON s.name = u.shop_name
 JOIN roles r ON r.name = u.role_name
-ON CONFLICT DO NOTHING;
+ON CONFLICT(email) DO NOTHING;
 
--- ======================
--- SEED CATEGORIES & PRODUCTS (example)
--- ======================
-INSERT INTO categories (name) VALUES
-('Bread and Cereals'),
-('Meat')
-ON CONFLICT (name) DO NOTHING;
+-- ============================================
+-- PRODUCTS
+-- ============================================
+INSERT INTO products (product_name, category, price, vat_rate, zero_rated)
+VALUES
+('White Bread', 'Bread and Cereals', 15.0, 0.15, false),
+('Wholegrain Bread', 'Bread and Cereals', 18.0, 0.15, false),
+('Rye Bread', 'Bread and Cereals', 20.0, 0.15, false),
+('Oats', 'Bread and Cereals', 25.0, 0.15, false),
+('Rice', 'Bread and Cereals', 30.0, 0.15, false),
+('Plastic Bag', 'Bag Levy', 1.0, 0.0, true)
+ON CONFLICT(product_name) DO NOTHING;
 
-INSERT INTO products (product_id, name, category_id, expiration_days, damage_status) VALUES
-('P0001', 'White Bread', (SELECT id FROM categories WHERE name='Bread and Cereals'), 7, NULL),
-('P0017', 'Beef', (SELECT id FROM categories WHERE name='Meat'), 3, 'Fresh')
-ON CONFLICT (product_id) DO NOTHING;
+-- ============================================
+-- SALES TABLE
+-- ============================================
+CREATE TABLE IF NOT EXISTS sales (
+  id SERIAL PRIMARY KEY,
+  product_id INT REFERENCES products(id),
+  quantity INT NOT NULL,
+  total_amount NUMERIC(10,2) NOT NULL,
+  created_at TIMESTAMP DEFAULT now()
+);
+
+-- ============================================
+-- RETURNS TABLE
+-- ============================================
+CREATE TABLE IF NOT EXISTS returns (
+  id SERIAL PRIMARY KEY,
+  sale_id INT REFERENCES sales(id),
+  reason TEXT,
+  created_at TIMESTAMP DEFAULT now()
+);
+
+-- ============================================
+-- INVENTORY TRIGGERS
+-- ============================================
+-- Decrease stock after sale
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'trg_decrease_stock') THEN
+        CREATE OR REPLACE FUNCTION decrease_product_quantity()
+        RETURNS TRIGGER AS $$
+        BEGIN
+            UPDATE products
+            SET quantity = quantity - NEW.quantity
+            WHERE id = NEW.product_id;
+            RETURN NEW;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        CREATE TRIGGER trg_decrease_stock
+        AFTER INSERT ON sales
+        FOR EACH ROW
+        EXECUTE FUNCTION decrease_product_quantity();
+    END IF;
+END $$;
+
+-- Increase stock after return
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'trg_increase_stock') THEN
+        CREATE OR REPLACE FUNCTION increase_product_quantity()
+        RETURNS TRIGGER AS $$
+        BEGIN
+            UPDATE products
+            SET quantity = quantity + (SELECT quantity FROM sales WHERE id = NEW.sale_id)
+            WHERE id = (SELECT product_id FROM sales WHERE id = NEW.sale_id);
+            RETURN NEW;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        CREATE TRIGGER trg_increase_stock
+        AFTER INSERT ON returns
+        FOR EACH ROW
+        EXECUTE FUNCTION increase_product_quantity();
+    END IF;
+END $$;
