@@ -1,4 +1,3 @@
-cat <<'EOF' > check_project.sh
 #!/bin/bash
 
 echo "==== Checking Project Setup for choppiesnamdash ===="
@@ -189,4 +188,3 @@ fi
 
 echo "Try running 'npm run dev' to verify Vite dev server works."
 echo "==== Project Check Complete ===="
-EOF
