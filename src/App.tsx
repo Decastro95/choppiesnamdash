@@ -5,11 +5,11 @@ import { supabase } from "./supabaseClient";
 import { Database } from "./types/supabase";
 
 // Dashboards
-import CashierDashboard from "./pages/Dashboard/CashierDashboard";
-import ManagerDashboard from "./pages/Dashboard/ManagerDashboard";
-import AdminDashboard from "./pages/Dashboard/AdminDashboard";
-import CEODashboard from "./pages/Dashboard/CEODashboard";
-import SupplierDashboard from "./pages/Dashboard/SupplierDashboard";
+import CashierDashboard from "./pages/Dashboard/Dashboard/CashierDashboard";
+import ManagerDashboard from "./pages/Dashboard/Dashboard/ManagerDashboard";
+import AdminDashboard from "./pages/Dashboard/Dashboard/AdminDashboard";
+import CEODashboard from "./pages/Dashboard/Dashboard/CEODashboard";
+import SupplierDashboard from "./pages/Dashboard/Dashboard/SupplierDashboard";
 
 // Components
 import Navbar from "./components/Navbar";
