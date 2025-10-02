@@ -1,0 +1,2 @@
+==== Starting Full File-by-File Error Diagnosis ====
+TypeScript (tsc) not found ❌. Run: npm install typescript --save-dev

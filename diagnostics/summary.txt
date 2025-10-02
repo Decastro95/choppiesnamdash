@@ -1,0 +1,7 @@
+==== Diagnostics run at Wed Oct  1 15:31:33 UTC 2025 ====
+TypeScript: OK
+ESLint saved: diagnostics/eslint.txt
+Import checker: OK
+Vite build: FAILED (see diagnostics/vite_build.txt)
+
+Diagnostics complete. Summary:

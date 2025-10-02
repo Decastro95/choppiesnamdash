@@ -1,0 +1,14 @@
+
+=== Vite build (optional) ===
+Supabase URL set — attempting vite build (may fail if environment incomplete)
+vite v7.1.5 building for production...
+transforming...
+✓ 7 modules transformed.
+✗ Build failed in 147ms
+error during build:
+Could not resolve "./pages/Dashboard/CashierDashboard" from "src/App.tsx"
+file: /workspaces/choppiesnamdash/src/App.tsx
+    at getRollupError (file:///workspaces/choppiesnamdash/node_modules/rollup/dist/es/shared/parseAst.js:401:41)
+    at error (file:///workspaces/choppiesnamdash/node_modules/rollup/dist/es/shared/parseAst.js:397:42)
+    at ModuleLoader.handleInvalidResolvedId (file:///workspaces/choppiesnamdash/node_modules/rollup/dist/es/shared/node-entry.js:21567:24)
+    at file:///workspaces/choppiesnamdash/node_modules/rollup/dist/es/shared/node-entry.js:21527:26
