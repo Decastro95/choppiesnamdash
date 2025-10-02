@@ -103,7 +103,7 @@ Oops! Something went wrong! :(
 
 ESLint: 9.36.0
 
-Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' imported from /workspaces/choppiesnamdash/eslint.config.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported from /workspaces/choppiesnamdash/eslint.config.js
     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
     at packageResolve (node:internal/modules/esm/resolve:768:81)
     at moduleResolve (node:internal/modules/esm/resolve:854:18)
@@ -113,7 +113,7 @@ Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' 
     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
     at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
-(node:105354) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
+(node:67853) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
@@ -291,7 +291,7 @@ Oops! Something went wrong! :(
 
 ESLint: 9.36.0
 
-Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' imported from /workspaces/choppiesnamdash/eslint.config.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported from /workspaces/choppiesnamdash/eslint.config.js
     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
     at packageResolve (node:internal/modules/esm/resolve:768:81)
     at moduleResolve (node:internal/modules/esm/resolve:854:18)
@@ -301,7 +301,105 @@ Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' 
     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
     at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
-(node:105488) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
+(node:67997) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Done ✅
+
+---- Checking src/pages/Dashboard/Login.tsx ----
+Running TypeScript check...
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m3[0m:[93m26[0m - [91merror[0m[90m TS2307: [0mCannot find module '../supabaseClient' or its corresponding type declarations.
+
+[7m3[0m import { supabase } from "../supabaseClient";
+[7m [0m [91m                         ~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m11[0m:[93m33[0m - [91merror[0m[90m TS2503: [0mCannot find namespace 'React'.
+
+[7m11[0m   const handleLogin = async (e: React.FormEvent) => {
+[7m  [0m [91m                                ~~~~~[0m
+
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m29[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m29[0m     <div className="flex items-center justify-center h-screen bg-gray-100">
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m30[0m:[93m7[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m30[0m       <div className="bg-white shadow-lg rounded-2xl p-8 w-96">
+[7m  [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m31[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m31[0m         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
+[7m  [0m [91m        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m34[0m:[93m19[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m34[0m         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+[7m  [0m [91m                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m35[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m35[0m         <form onSubmit={handleLogin} className="space-y-4">
+[7m  [0m [91m        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m36[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m 36[0m           <input
+[7m   [0m [91m          ~~~~~~[0m
+[7m 37[0m             type="email"
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m 42[0m             required
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~[0m
+[7m 43[0m           />
+[7m   [0m [91m~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m44[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m 44[0m           <input
+[7m   [0m [91m          ~~~~~~[0m
+[7m 45[0m             type="password"
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m 50[0m             required
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~[0m
+[7m 51[0m           />
+[7m   [0m [91m~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m52[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m 52[0m           <button
+[7m   [0m [91m          ~~~~~~~[0m
+[7m 53[0m             type="submit"
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m 55[0m             className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m 56[0m           >
+[7m   [0m [91m~~~~~~~~~~~[0m
+
+
+Found 10 errors in the same file, starting at: src/pages/Dashboard/Login.tsx[90m:3[0m
+
+Running ESLint check...
+
+Oops! Something went wrong! :(
+
+ESLint: 9.36.0
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported from /workspaces/choppiesnamdash/eslint.config.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
+(node:68105) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
@@ -397,7 +495,7 @@ Oops! Something went wrong! :(
 
 ESLint: 9.36.0
 
-Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' imported from /workspaces/choppiesnamdash/eslint.config.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported from /workspaces/choppiesnamdash/eslint.config.js
     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
     at packageResolve (node:internal/modules/esm/resolve:768:81)
     at moduleResolve (node:internal/modules/esm/resolve:854:18)
@@ -407,7 +505,7 @@ Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' 
     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
     at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
-(node:105616) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
+(node:68229) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
@@ -522,7 +620,7 @@ Oops! Something went wrong! :(
 
 ESLint: 9.36.0
 
-Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' imported from /workspaces/choppiesnamdash/eslint.config.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported from /workspaces/choppiesnamdash/eslint.config.js
     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
     at packageResolve (node:internal/modules/esm/resolve:768:81)
     at moduleResolve (node:internal/modules/esm/resolve:854:18)
@@ -532,7 +630,7 @@ Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' 
     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
     at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
-(node:105742) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
+(node:68373) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
@@ -642,7 +740,7 @@ Oops! Something went wrong! :(
 
 ESLint: 9.36.0
 
-Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' imported from /workspaces/choppiesnamdash/eslint.config.js
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported from /workspaces/choppiesnamdash/eslint.config.js
     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
     at packageResolve (node:internal/modules/esm/resolve:768:81)
     at moduleResolve (node:internal/modules/esm/resolve:854:18)
@@ -652,7 +750,7 @@ Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' 
     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
     at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
-(node:105868) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
+(node:68487) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
