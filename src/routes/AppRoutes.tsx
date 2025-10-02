@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AdminDashboard from "../pages/AdminDashboard";
-import CEODashboard from "../pages/CEODashboard";
-import ManagerDashboard from "../pages/ManagerDashboard";
-import CashierDashboard from "../pages/CashierDashboard";
-import SupplierDashboard from "../pages/SupplierDashboard";
+import AdminDashboard from "../pages/Dashboard/AdminDashboard";
+import CEODashboard from "../pages/Dashboard/CEODashboard";
+import ManagerDashboard from "../pages/Dashboard/ManagerDashboard";
+import CashierDashboard from "../pages/Dashboard/CashierDashboard";
+import SupplierDashboard from "../pages/Dashboard/SupplierDashboard";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 export default function AppRoutes() {

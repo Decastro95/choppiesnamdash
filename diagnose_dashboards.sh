@@ -20,7 +20,7 @@ for file in $(find src/pages/Dashboard -type f -name "*.tsx"); do
   $TSC --noEmit --pretty "$file" >> "$REPORT" 2>&1
   
   echo "Running ESLint check..." | tee -a "$REPORT"
-  $ESLINT "$file" >> "$REPORT" 2>&1 || echo "⚠️ ESLint found issues in $file" | tee -a "$REPORT"
+  $ESLINT --format=unix "$file" >> "$REPORT" 2>&1
   
   echo "Done ✅" | tee -a "$REPORT"
   echo "" | tee -a "$REPORT"

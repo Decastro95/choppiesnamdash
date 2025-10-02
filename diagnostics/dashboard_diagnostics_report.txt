@@ -1,0 +1,661 @@
+==== Starting Dashboard Error Diagnosis ====
+---- Checking src/pages/Dashboard/ManagerDashboard.tsx ----
+Running TypeScript check...
+[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m6[0m:[93m45[0m - [91merror[0m[90m TS2339: [0mProperty 'products' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
+
+[7m6[0m type Product = Database["public"]["Tables"]["products"]["Row"];
+[7m [0m [91m                                            ~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m7[0m:[93m42[0m - [91merror[0m[90m TS2339: [0mProperty 'sales' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
+
+[7m7[0m type Sale = Database["public"]["Tables"]["sales"]["Row"];
+[7m [0m [91m                                         ~~~~~~~[0m
+
+[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m58[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m58[0m     <div className="p-4">
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m59[0m:[93m7[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m59[0m       <h1 className="text-2xl font-bold mb-4">Manager Dashboard</h1>
+[7m  [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m60[0m:[93m19[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m60[0m       {loading && <p>Loading data...</p>}
+[7m  [0m [91m                  ~~~[0m
+
+[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m63[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m63[0m         <>
+[7m  [0m [91m        ~~[0m
+
+[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m64[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m64[0m           <h2 className="text-xl font-semibold mb-2">Sales Overview</h2>
+[7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m65[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m65[0m           <ul>
+[7m  [0m [91m          ~~~~[0m
+
+[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m69[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m69[0m                 <li key={s.id}>
+[7m  [0m [91m                ~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m76[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m76[0m           <div className="mt-4">
+[7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m77[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m77[0m             <p>Subtotal: N${subtotal.toFixed(2)}</p>
+[7m  [0m [91m            ~~~[0m
+
+[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m78[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m78[0m             <p>VAT (15%): N${vat.toFixed(2)}</p>
+[7m  [0m [91m            ~~~[0m
+
+[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m79[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m79[0m             <p>Plastic Bag Levy: N${bagLevy.toFixed(2)}</p>
+[7m  [0m [91m            ~~~[0m
+
+[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m80[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m80[0m             <p className="font-bold">Total Sales: N${total.toFixed(2)}</p>
+[7m  [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+
+[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m [0m [91m                    ~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+
+[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m [0m [91m                                ~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+
+[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m [0m [91m                        ~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+
+[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m [0m [91m                                    ~~~[0m
+
+
+Found 18 errors in 2 files.
+
+Errors  Files
+    14  src/pages/Dashboard/ManagerDashboard.tsx[90m:6[0m
+     4  src/supabaseClient.ts[90m:5[0m
+Running ESLint check...
+
+Oops! Something went wrong! :(
+
+ESLint: 9.36.0
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' imported from /workspaces/choppiesnamdash/eslint.config.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
+(node:105354) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Done ✅
+
+---- Checking src/pages/Dashboard/CashierDashboard.tsx ----
+Running TypeScript check...
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m6[0m:[93m45[0m - [91merror[0m[90m TS2339: [0mProperty 'products' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
+
+[7m6[0m type Product = Database["public"]["Tables"]["products"]["Row"];
+[7m [0m [91m                                            ~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m7[0m:[93m42[0m - [91merror[0m[90m TS2339: [0mProperty 'sales' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
+
+[7m7[0m type Sale = Database["public"]["Tables"]["sales"]["Row"];
+[7m [0m [91m                                         ~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m69[0m:[93m54[0m - [91merror[0m[90m TS2769: [0mNo overload matches this call.
+  Overload 1 of 2, '(values: never, options?: { count?: "exact" | "planned" | "estimated"; }): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "sales", never, "POST">', gave the following error.
+    Argument of type '{ product_id: any; total_price: any; created_at: Date; }' is not assignable to parameter of type 'never'.
+  Overload 2 of 2, '(values: never[], options?: { count?: "exact" | "planned" | "estimated"; defaultToNull?: boolean; }): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "sales", never, "POST">', gave the following error.
+    Object literal may only specify known properties, and 'product_id' does not exist in type 'never[]'.
+
+[7m69[0m       const { error } = await supabase.from("sales").insert({
+[7m  [0m [91m                                                     ~~~~~~[0m
+
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m81[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m81[0m     <div className="p-4">
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m82[0m:[93m7[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m82[0m       <h1 className="text-2xl font-bold mb-4">Cashier Dashboard</h1>
+[7m  [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m83[0m:[93m19[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m83[0m       {loading && <p>Loading products...</p>}
+[7m  [0m [91m                  ~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m86[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m86[0m         <>
+[7m  [0m [91m        ~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m87[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m87[0m           <h2 className="text-xl font-semibold mb-2">Products</h2>
+[7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m88[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m88[0m           <ul className="grid grid-cols-2 md:grid-cols-4 gap-2">
+[7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m90[0m:[93m15[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m90[0m               <li key={p.id} className="border p-2 rounded">
+[7m  [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m91[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m91[0m                 <div>{p.name}</div>
+[7m  [0m [91m                ~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m92[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m92[0m                 <div>N${p.price.toFixed(2)}</div>
+[7m  [0m [91m                ~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m93[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m93[0m                 <button
+[7m  [0m [91m                ~~~~~~~[0m
+[7m94[0m                   className="mt-2 px-2 py-1 bg-blue-500 text-white rounded"
+[7m  [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m95[0m                   onClick={() => addToCart(p)}
+[7m  [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m96[0m                 >
+[7m  [0m [91m~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m103[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m103[0m           <h2 className="text-xl font-semibold mt-4 mb-2">Cart</h2>
+[7m   [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m104[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m104[0m           <ul>
+[7m   [0m [91m          ~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m106[0m:[93m15[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m106[0m               <li key={c.id} className="flex justify-between items-center">
+[7m   [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m108[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m108[0m                 <button
+[7m   [0m [91m                ~~~~~~~[0m
+[7m109[0m                   className="ml-2 px-2 py-1 bg-red-500 text-white rounded"
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m110[0m                   onClick={() => removeFromCart(c.id)}
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m111[0m                 >
+[7m   [0m [91m~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m118[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m118[0m           <div className="mt-4">
+[7m   [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m119[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m119[0m             <p>Subtotal: N${subtotal.toFixed(2)}</p>
+[7m   [0m [91m            ~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m120[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m120[0m             <p>VAT (15%): N${vat.toFixed(2)}</p>
+[7m   [0m [91m            ~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m121[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m121[0m             <p>Plastic Bag Levy: N${bagLevy.toFixed(2)}</p>
+[7m   [0m [91m            ~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m122[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m122[0m             <p className="font-bold">Total: N${total.toFixed(2)}</p>
+[7m   [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m123[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m123[0m             <button
+[7m   [0m [91m            ~~~~~~~[0m
+[7m124[0m               className="mt-2 px-4 py-2 bg-green-600 text-white rounded"
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m125[0m               onClick={checkout}
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m126[0m             >
+[7m   [0m [91m~~~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+
+[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m [0m [91m                    ~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+
+[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m [0m [91m                                ~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+
+[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m [0m [91m                        ~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+
+[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m [0m [91m                                    ~~~[0m
+
+
+Found 27 errors in 2 files.
+
+Errors  Files
+    23  src/pages/Dashboard/CashierDashboard.tsx[90m:6[0m
+     4  src/supabaseClient.ts[90m:5[0m
+Running ESLint check...
+
+Oops! Something went wrong! :(
+
+ESLint: 9.36.0
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' imported from /workspaces/choppiesnamdash/eslint.config.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
+(node:105488) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Done ✅
+
+---- Checking src/pages/Dashboard/SupplierDashboard.tsx ----
+Running TypeScript check...
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m6[0m:[93m43[0m - [91merror[0m[90m TS2339: [0mProperty 'orders' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
+
+[7m6[0m type Order = Database["public"]["Tables"]["orders"]["Row"];
+[7m [0m [91m                                          ~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m32[0m:[93m15[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ status: string; }' is not assignable to parameter of type 'never'.
+
+[7m32[0m       .update({ status: "fulfilled" })
+[7m  [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m42[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m42[0m     <div className="p-4">
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m43[0m:[93m7[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m43[0m       <h1 className="text-2xl font-bold mb-4">Supplier Dashboard</h1>
+[7m  [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m44[0m:[93m19[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m44[0m       {loading && <p>Loading...</p>}
+[7m  [0m [91m                  ~~~[0m
+
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m47[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m47[0m         <>
+[7m  [0m [91m        ~~[0m
+
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m48[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m48[0m           <h2 className="text-xl font-semibold mb-2">Orders</h2>
+[7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m49[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m49[0m           <ul>
+[7m  [0m [91m          ~~~~[0m
+
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m51[0m:[93m15[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m51[0m               <li key={o.id} className="mb-2">
+[7m  [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m54[0m:[93m19[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m54[0m                   <button
+[7m  [0m [91m                  ~~~~~~~[0m
+[7m55[0m                     className="ml-2 px-2 py-1 bg-green-500 text-white rounded"
+[7m  [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m56[0m                     onClick={() => markAsFulfilled(o.id)}
+[7m  [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m57[0m                   >
+[7m  [0m [91m~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+
+[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m [0m [91m                    ~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+
+[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m [0m [91m                                ~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+
+[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m [0m [91m                        ~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+
+[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m [0m [91m                                    ~~~[0m
+
+
+Found 14 errors in 2 files.
+
+Errors  Files
+    10  src/pages/Dashboard/SupplierDashboard.tsx[90m:6[0m
+     4  src/supabaseClient.ts[90m:5[0m
+Running ESLint check...
+
+Oops! Something went wrong! :(
+
+ESLint: 9.36.0
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' imported from /workspaces/choppiesnamdash/eslint.config.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
+(node:105616) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Done ✅
+
+---- Checking src/pages/Dashboard/CEODashboard.tsx ----
+Running TypeScript check...
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m6[0m:[93m42[0m - [91merror[0m[90m TS2339: [0mProperty 'sales' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
+
+[7m6[0m type Sale = Database["public"]["Tables"]["sales"]["Row"];
+[7m [0m [91m                                         ~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m7[0m:[93m45[0m - [91merror[0m[90m TS2339: [0mProperty 'products' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
+
+[7m7[0m type Product = Database["public"]["Tables"]["products"]["Row"];
+[7m [0m [91m                                            ~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m49[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m49[0m     <div className="p-4">
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m50[0m:[93m7[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m50[0m       <h1 className="text-2xl font-bold mb-4">CEO Dashboard</h1>
+[7m  [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m51[0m:[93m19[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m51[0m       {loading && <p>Loading...</p>}
+[7m  [0m [91m                  ~~~[0m
+
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m54[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m54[0m         <>
+[7m  [0m [91m        ~~[0m
+
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m55[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m55[0m           <h2 className="text-xl font-semibold mb-2">Total Revenue</h2>
+[7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m56[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m56[0m           <p>N${totalRevenue.toFixed(2)}</p>
+[7m  [0m [91m          ~~~[0m
+
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m58[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m58[0m           <h2 className="text-xl font-semibold mb-2">VAT Collected (15%)</h2>
+[7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m59[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m59[0m           <p>N${vatTotal.toFixed(2)}</p>
+[7m  [0m [91m          ~~~[0m
+
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m61[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m61[0m           <h2 className="text-xl font-semibold mb-2">Plastic Bag Levy</h2>
+[7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m62[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m62[0m           <p>N${bagLevy.toFixed(2)}</p>
+[7m  [0m [91m          ~~~[0m
+
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m64[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m64[0m           <h2 className="text-xl font-semibold mb-2">Sales Details</h2>
+[7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m65[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m65[0m           <ul>
+[7m  [0m [91m          ~~~~[0m
+
+[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m67[0m:[93m15[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m67[0m               <li key={s.id}>
+[7m  [0m [91m              ~~~~~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+
+[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m [0m [91m                    ~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+
+[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m [0m [91m                                ~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+
+[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m [0m [91m                        ~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+
+[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m [0m [91m                                    ~~~[0m
+
+
+Found 19 errors in 2 files.
+
+Errors  Files
+    15  src/pages/Dashboard/CEODashboard.tsx[90m:6[0m
+     4  src/supabaseClient.ts[90m:5[0m
+Running ESLint check...
+
+Oops! Something went wrong! :(
+
+ESLint: 9.36.0
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' imported from /workspaces/choppiesnamdash/eslint.config.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
+(node:105742) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Done ✅
+
+---- Checking src/pages/Dashboard/AdminDashboard.tsx ----
+Running TypeScript check...
+[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m6[0m:[93m45[0m - [91merror[0m[90m TS2339: [0mProperty 'products' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
+
+[7m6[0m type Product = Database["public"]["Tables"]["products"]["Row"];
+[7m [0m [91m                                            ~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m7[0m:[93m42[0m - [91merror[0m[90m TS2339: [0mProperty 'sales' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
+
+[7m7[0m type Sale = Database["public"]["Tables"]["sales"]["Row"];
+[7m [0m [91m                                         ~~~~~~~[0m
+
+[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m58[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m58[0m     <div className="p-4">
+[7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m59[0m:[93m7[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m59[0m       <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
+[7m  [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m60[0m:[93m19[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m60[0m       {loading && <p>Loading data...</p>}
+[7m  [0m [91m                  ~~~[0m
+
+[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m63[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m63[0m         <>
+[7m  [0m [91m        ~~[0m
+
+[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m64[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m64[0m           <h2 className="text-xl font-semibold mb-2">Sales Summary</h2>
+[7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m65[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m65[0m           <ul>
+[7m  [0m [91m          ~~~~[0m
+
+[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m69[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m69[0m                 <li key={s.id}>
+[7m  [0m [91m                ~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m76[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m76[0m           <div className="mt-4">
+[7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m77[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m77[0m             <p>Subtotal: N${subtotal.toFixed(2)}</p>
+[7m  [0m [91m            ~~~[0m
+
+[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m78[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m78[0m             <p>VAT (15%): N${vat.toFixed(2)}</p>
+[7m  [0m [91m            ~~~[0m
+
+[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m79[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m79[0m             <p>Plastic Bag Levy: N${bagLevy.toFixed(2)}</p>
+[7m  [0m [91m            ~~~[0m
+
+[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m80[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m80[0m             <p className="font-bold">Total Sales: N${total.toFixed(2)}</p>
+[7m  [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+
+[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m [0m [91m                    ~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+
+[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m [0m [91m                                ~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+
+[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m [0m [91m                        ~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+
+[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m [0m [91m                                    ~~~[0m
+
+
+Found 18 errors in 2 files.
+
+Errors  Files
+    14  src/pages/Dashboard/AdminDashboard.tsx[90m:6[0m
+     4  src/supabaseClient.ts[90m:5[0m
+Running ESLint check...
+
+Oops! Something went wrong! :(
+
+ESLint: 9.36.0
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'eslint-plugin-react-refresh' imported from /workspaces/choppiesnamdash/eslint.config.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:256:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:854:18)
+    at defaultResolve (node:internal/modules/esm/resolve:984:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:780:12)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:25)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
+    at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
+(node:105868) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Done ✅
+
+==== Dashboard Error Diagnosis Complete ====
