@@ -113,10 +113,6 @@ Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported f
     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
     at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
-(node:67853) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
-Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
-To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
-(Use `node --trace-warnings ...` to show where the warning was created)
 Done ✅
 
 ---- Checking src/pages/Dashboard/CashierDashboard.tsx ----
@@ -301,10 +297,6 @@ Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported f
     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
     at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
-(node:67997) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
-Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
-To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
-(Use `node --trace-warnings ...` to show where the warning was created)
 Done ✅
 
 ---- Checking src/pages/Dashboard/Login.tsx ----
@@ -399,10 +391,6 @@ Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported f
     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
     at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
-(node:68105) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
-Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
-To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
-(Use `node --trace-warnings ...` to show where the warning was created)
 Done ✅
 
 ---- Checking src/pages/Dashboard/SupplierDashboard.tsx ----
@@ -505,10 +493,6 @@ Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported f
     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
     at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
-(node:68229) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
-Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
-To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
-(Use `node --trace-warnings ...` to show where the warning was created)
 Done ✅
 
 ---- Checking src/pages/Dashboard/CEODashboard.tsx ----
@@ -630,10 +614,6 @@ Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported f
     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
     at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
-(node:68373) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
-Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
-To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
-(Use `node --trace-warnings ...` to show where the warning was created)
 Done ✅
 
 ---- Checking src/pages/Dashboard/AdminDashboard.tsx ----
@@ -750,10 +730,6 @@ Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported f
     at ModuleLoader.resolve (node:internal/modules/esm/loader:687:38)
     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:305:38)
     at ModuleJob._link (node:internal/modules/esm/module_job:175:49)
-(node:68487) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///workspaces/choppiesnamdash/eslint.config.js?mtime=1758043120434 is not specified and it doesn't parse as CommonJS.
-Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
-To eliminate this warning, add "type": "module" to /workspaces/choppiesnamdash/package.json.
-(Use `node --trace-warnings ...` to show where the warning was created)
 Done ✅
 
 ==== Dashboard Error Diagnosis Complete ====

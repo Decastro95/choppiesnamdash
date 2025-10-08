@@ -1,10 +1,9 @@
-// src/pages/Login.tsx
-import { useState } from "react";
-import { supabase } from "../supabaseClient";
+import React, { useState } from 'react';
+import { supabase } from '../../supabaseClient';
 
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Login: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -60,4 +59,6 @@ export default function Login() {
       </div>
     </div>
   );
-}
+};
+
+export default Login;

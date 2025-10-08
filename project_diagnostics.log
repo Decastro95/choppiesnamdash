@@ -2,8 +2,8 @@
 Checking npm install...
 npm install successful ✅
 Checking TypeScript compilation...
-No TypeScript errors ✅
+TypeScript errors found ❌ (see ts_errors.log)
 Checking Vite build...
-Vite build failed ❌ (see vite_build.log)
+Vite build successful ✅
 Supabase environment variables not set ❌
 ==== Error Check Complete ====
