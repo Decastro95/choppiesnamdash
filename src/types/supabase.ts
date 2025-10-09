@@ -1,85 +1,99 @@
-// src/types/supabase.ts
-export type Json = string | number | boolean | null | { [key: string]: Json } | Json[];
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[];
 
 export interface Database {
   public: {
     Tables: {
       users: {
         Row: {
-          id: string;
+          id: number;
           email: string;
-          role_id: string;
+          password: string;
+          role_id: number;
+          shop_id: number;
+          created_at: string | null;
         };
         Insert: {
-          id?: string;
           email: string;
-          role_id: string;
+          password: string;
+          role_id: number;
+          shop_id: number;
+          created_at?: string | null;
         };
-        Update: {
-          id?: string;
-          email?: string;
-          role_id?: string;
-        };
+        Update: Partial<Database["public"]["Tables"]["users"]["Insert"]>;
       };
+
+      roles: {
+        Row: {
+          id: number;
+          name: string;
+        };
+        Insert: { name: string };
+        Update: Partial<Database["public"]["Tables"]["roles"]["Insert"]>;
+      };
+
+      shops: {
+        Row: {
+          id: number;
+          name: string;
+          location: string;
+        };
+        Insert: { name: string; location: string };
+        Update: Partial<Database["public"]["Tables"]["shops"]["Insert"]>;
+      };
+
       products: {
         Row: {
-          id: string;
+          id: number;
           name: string;
+          category: string;
           price: number;
           stock: number;
-          created_at: string;
+          expiry_date: string | null;
         };
         Insert: {
-          id?: string;
           name: string;
+          category: string;
           price: number;
           stock: number;
-          created_at?: string;
+          expiry_date?: string | null;
         };
-        Update: {
-          id?: string;
-          name?: string;
-          price?: number;
-          stock?: number;
-          created_at?: string;
-        };
+        Update: Partial<Database["public"]["Tables"]["products"]["Insert"]>;
       };
+
       sales: {
         Row: {
-          id: string;
-          product_id: string;
+          id: number;
+          product_id: number;
           total_price: number;
           created_at: string;
         };
         Insert: {
-          id?: string;
-          product_id: string;
+          product_id: number;
           total_price: number;
           created_at?: string;
         };
-        Update: {
-          id?: string;
-          product_id?: string;
-          total_price?: number;
-          created_at?: string;
-        };
+        Update: Partial<Database["public"]["Tables"]["sales"]["Insert"]>;
       };
+
       orders: {
         Row: {
-          id: string;
+          id: number;
+          supplier_id: number | null;
           status: string;
           created_at: string;
         };
         Insert: {
-          id?: string;
+          supplier_id?: number | null;
           status: string;
           created_at?: string;
         };
-        Update: {
-          id?: string;
-          status?: string;
-          created_at?: string;
-        };
+        Update: Partial<Database["public"]["Tables"]["orders"]["Insert"]>;
       };
     };
   };
