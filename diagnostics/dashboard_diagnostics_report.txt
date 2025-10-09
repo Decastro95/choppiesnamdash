@@ -1,16 +1,6 @@
 ==== Starting Dashboard Error Diagnosis ====
 ---- Checking src/pages/Dashboard/ManagerDashboard.tsx ----
 Running TypeScript check...
-[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m6[0m:[93m45[0m - [91merror[0m[90m TS2339: [0mProperty 'products' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
-
-[7m6[0m type Product = Database["public"]["Tables"]["products"]["Row"];
-[7m [0m [91m                                            ~~~~~~~~~~[0m
-
-[96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m7[0m:[93m42[0m - [91merror[0m[90m TS2339: [0mProperty 'sales' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
-
-[7m7[0m type Sale = Database["public"]["Tables"]["sales"]["Row"];
-[7m [0m [91m                                         ~~~~~~~[0m
-
 [96msrc/pages/Dashboard/ManagerDashboard.tsx[0m:[93m58[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
 [7m58[0m     <div className="p-4">
@@ -71,32 +61,32 @@ Running TypeScript check...
 [7m80[0m             <p className="font-bold">Total Sales: N${total.toFixed(2)}</p>
 [7m  [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+[96msrc/supabaseClient.ts[0m:[93m3[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
 
-[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m3[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
 [7m [0m [91m                    ~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+[96msrc/supabaseClient.ts[0m:[93m3[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
 
-[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m3[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
 [7m [0m [91m                                ~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+[96msrc/supabaseClient.ts[0m:[93m4[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
 
-[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m4[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY!;
 [7m [0m [91m                        ~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+[96msrc/supabaseClient.ts[0m:[93m4[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
 
-[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m4[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY!;
 [7m [0m [91m                                    ~~~[0m
 
 
-Found 18 errors in 2 files.
+Found 16 errors in 2 files.
 
 Errors  Files
-    14  src/pages/Dashboard/ManagerDashboard.tsx[90m:6[0m
-     4  src/supabaseClient.ts[90m:5[0m
+    12  src/pages/Dashboard/ManagerDashboard.tsx[90m:58[0m
+     4  src/supabaseClient.ts[90m:3[0m
 Running ESLint check...
 
 Oops! Something went wrong! :(
@@ -117,170 +107,150 @@ Done ✅
 
 ---- Checking src/pages/Dashboard/CashierDashboard.tsx ----
 Running TypeScript check...
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m6[0m:[93m45[0m - [91merror[0m[90m TS2339: [0mProperty 'products' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m82[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m6[0m type Product = Database["public"]["Tables"]["products"]["Row"];
-[7m [0m [91m                                            ~~~~~~~~~~[0m
-
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m7[0m:[93m42[0m - [91merror[0m[90m TS2339: [0mProperty 'sales' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
-
-[7m7[0m type Sale = Database["public"]["Tables"]["sales"]["Row"];
-[7m [0m [91m                                         ~~~~~~~[0m
-
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m69[0m:[93m54[0m - [91merror[0m[90m TS2769: [0mNo overload matches this call.
-  Overload 1 of 2, '(values: never, options?: { count?: "exact" | "planned" | "estimated"; }): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "sales", never, "POST">', gave the following error.
-    Argument of type '{ product_id: any; total_price: any; created_at: Date; }' is not assignable to parameter of type 'never'.
-  Overload 2 of 2, '(values: never[], options?: { count?: "exact" | "planned" | "estimated"; defaultToNull?: boolean; }): PostgrestFilterBuilder<{ PostgrestVersion: "12"; }, never, never, null, "sales", never, "POST">', gave the following error.
-    Object literal may only specify known properties, and 'product_id' does not exist in type 'never[]'.
-
-[7m69[0m       const { error } = await supabase.from("sales").insert({
-[7m  [0m [91m                                                     ~~~~~~[0m
-
-
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m81[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
-
-[7m81[0m     <div className="p-4">
+[7m82[0m     <div className="p-4">
 [7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m82[0m:[93m7[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m83[0m:[93m7[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m82[0m       <h1 className="text-2xl font-bold mb-4">Cashier Dashboard</h1>
-[7m  [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m83[0m       <h1 className="text-2xl font-bold mb-4 text-red-700">
+[7m  [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m83[0m:[93m19[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m88[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m83[0m       {loading && <p>Loading products...</p>}
-[7m  [0m [91m                  ~~~[0m
+[7m88[0m         <p>Loading products...</p>
+[7m  [0m [91m        ~~~[0m
 
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m86[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m90[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m86[0m         <>
+[7m90[0m         <>
 [7m  [0m [91m        ~~[0m
 
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m87[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m91[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m87[0m           <h2 className="text-xl font-semibold mb-2">Products</h2>
+[7m91[0m           <h2 className="text-xl font-semibold mb-2">Products</h2>
 [7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m88[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m92[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m88[0m           <ul className="grid grid-cols-2 md:grid-cols-4 gap-2">
+[7m92[0m           <ul className="grid grid-cols-2 md:grid-cols-4 gap-2">
 [7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m90[0m:[93m15[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m94[0m:[93m15[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m90[0m               <li key={p.id} className="border p-2 rounded">
-[7m  [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m94[0m               <li key={p.id} className="border p-2 rounded bg-white shadow-sm">
+[7m  [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m91[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m95[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m91[0m                 <div>{p.name}</div>
+[7m95[0m                 <div>{p.name}</div>
 [7m  [0m [91m                ~~~~~[0m
 
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m92[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m96[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m92[0m                 <div>N${p.price.toFixed(2)}</div>
-[7m  [0m [91m                ~~~~~[0m
+[7m96[0m                 <div className="text-gray-600">N${Number(p.price).toFixed(2)}</div>
+[7m  [0m [91m                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m93[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m97[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m93[0m                 <button
-[7m  [0m [91m                ~~~~~~~[0m
-[7m94[0m                   className="mt-2 px-2 py-1 bg-blue-500 text-white rounded"
-[7m  [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-[7m95[0m                   onClick={() => addToCart(p)}
-[7m  [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-[7m96[0m                 >
-[7m  [0m [91m~~~~~~~~~~~~~~~~~[0m
-
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m103[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
-
-[7m103[0m           <h2 className="text-xl font-semibold mt-4 mb-2">Cart</h2>
-[7m   [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m104[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
-
-[7m104[0m           <ul>
-[7m   [0m [91m          ~~~~[0m
-
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m106[0m:[93m15[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
-
-[7m106[0m               <li key={c.id} className="flex justify-between items-center">
-[7m   [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m108[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
-
-[7m108[0m                 <button
+[7m 97[0m                 <button
 [7m   [0m [91m                ~~~~~~~[0m
-[7m109[0m                   className="ml-2 px-2 py-1 bg-red-500 text-white rounded"
-[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-[7m110[0m                   onClick={() => removeFromCart(c.id)}
-[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-[7m111[0m                 >
+[7m 98[0m                   className="mt-2 px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m 99[0m                   onClick={() => addToCart(p)}
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m100[0m                 >
 [7m   [0m [91m~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m118[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m107[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m118[0m           <div className="mt-4">
-[7m   [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m107[0m           <h2 className="text-xl font-semibold mt-4 mb-2">Cart</h2>
+[7m   [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m119[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m108[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m119[0m             <p>Subtotal: N${subtotal.toFixed(2)}</p>
-[7m   [0m [91m            ~~~[0m
+[7m108[0m           <ul>
+[7m   [0m [91m          ~~~~[0m
 
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m120[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m110[0m:[93m15[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m120[0m             <p>VAT (15%): N${vat.toFixed(2)}</p>
-[7m   [0m [91m            ~~~[0m
+[7m110[0m               <li key={c.id} className="flex justify-between items-center border-b py-1">
+[7m   [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m121[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m112[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m121[0m             <p>Plastic Bag Levy: N${bagLevy.toFixed(2)}</p>
-[7m   [0m [91m            ~~~[0m
+[7m112[0m                 <button
+[7m   [0m [91m                ~~~~~~~[0m
+[7m113[0m                   className="ml-2 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m114[0m                   onClick={() => removeFromCart(c.id)}
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m115[0m                 >
+[7m   [0m [91m~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m122[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m122[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m122[0m             <p className="font-bold">Total: N${total.toFixed(2)}</p>
-[7m   [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m122[0m           <div className="mt-4 bg-gray-50 p-3 rounded shadow">
+[7m   [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
 [96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m123[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m123[0m             <button
+[7m123[0m             <p>Subtotal: N${subtotal.toFixed(2)}</p>
+[7m   [0m [91m            ~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m124[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m124[0m             <p>VAT (15%): N${vat.toFixed(2)}</p>
+[7m   [0m [91m            ~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m125[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m125[0m             <p>Plastic Bag Levy: N${bagLevy.toFixed(2)}</p>
+[7m   [0m [91m            ~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m126[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m126[0m             <p className="font-bold text-lg text-red-700">
+[7m   [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/CashierDashboard.tsx[0m:[93m129[0m:[93m13[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m129[0m             <button
 [7m   [0m [91m            ~~~~~~~[0m
-[7m124[0m               className="mt-2 px-4 py-2 bg-green-600 text-white rounded"
-[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-[7m125[0m               onClick={checkout}
+[7m130[0m               className="mt-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m131[0m               onClick={checkout}
 [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-[7m126[0m             >
+[7m132[0m             >
 [7m   [0m [91m~~~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+[96msrc/supabaseClient.ts[0m:[93m3[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
 
-[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m3[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
 [7m [0m [91m                    ~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+[96msrc/supabaseClient.ts[0m:[93m3[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
 
-[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m3[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
 [7m [0m [91m                                ~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+[96msrc/supabaseClient.ts[0m:[93m4[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
 
-[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m4[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY!;
 [7m [0m [91m                        ~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+[96msrc/supabaseClient.ts[0m:[93m4[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
 
-[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m4[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY!;
 [7m [0m [91m                                    ~~~[0m
 
 
-Found 27 errors in 2 files.
+Found 24 errors in 2 files.
 
 Errors  Files
-    23  src/pages/Dashboard/CashierDashboard.tsx[90m:6[0m
-     4  src/supabaseClient.ts[90m:5[0m
+    20  src/pages/Dashboard/CashierDashboard.tsx[90m:82[0m
+     4  src/supabaseClient.ts[90m:3[0m
 Running ESLint check...
 
 Oops! Something went wrong! :(
@@ -301,80 +271,103 @@ Done ✅
 
 ---- Checking src/pages/Dashboard/Login.tsx ----
 Running TypeScript check...
-[96msrc/pages/Dashboard/Login.tsx[0m:[93m3[0m:[93m26[0m - [91merror[0m[90m TS2307: [0mCannot find module '../supabaseClient' or its corresponding type declarations.
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m1[0m:[93m8[0m - [91merror[0m[90m TS1259: [0mModule '"/workspaces/choppiesnamdash/node_modules/@types/react/index"' can only be default-imported using the 'esModuleInterop' flag
 
-[7m3[0m import { supabase } from "../supabaseClient";
-[7m [0m [91m                         ~~~~~~~~~~~~~~~~~~~[0m
+[7m1[0m import React, { useState } from 'react';
+[7m [0m [91m       ~~~~~[0m
 
-[96msrc/pages/Dashboard/Login.tsx[0m:[93m11[0m:[93m33[0m - [91merror[0m[90m TS2503: [0mCannot find namespace 'React'.
+  [96mnode_modules/@types/react/index.d.ts[0m:[93m66[0m:[93m1[0m
+    [7m66[0m export = React;
+    [7m  [0m [96m~~~~~~~~~~~~~~~[0m
+    This module is declared with 'export =', and can only be used with a default import when using the 'esModuleInterop' flag.
 
-[7m11[0m   const handleLogin = async (e: React.FormEvent) => {
-[7m  [0m [91m                                ~~~~~[0m
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m28[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[96msrc/pages/Dashboard/Login.tsx[0m:[93m29[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
-
-[7m29[0m     <div className="flex items-center justify-center h-screen bg-gray-100">
+[7m28[0m     <div className="flex items-center justify-center h-screen bg-gray-100">
 [7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/Login.tsx[0m:[93m30[0m:[93m7[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m29[0m:[93m7[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m30[0m       <div className="bg-white shadow-lg rounded-2xl p-8 w-96">
+[7m29[0m       <div className="bg-white shadow-lg rounded-2xl p-8 w-96">
 [7m  [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/Login.tsx[0m:[93m31[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m30[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m31[0m         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
+[7m30[0m         <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
 [7m  [0m [91m        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/Login.tsx[0m:[93m34[0m:[93m19[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m33[0m:[93m19[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m34[0m         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+[7m33[0m         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 [7m  [0m [91m                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/Login.tsx[0m:[93m35[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m34[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m35[0m         <form onSubmit={handleLogin} className="space-y-4">
+[7m34[0m         <form onSubmit={handleLogin} className="space-y-4">
 [7m  [0m [91m        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/Login.tsx[0m:[93m36[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m35[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m 36[0m           <input
+[7m 35[0m           <input
 [7m   [0m [91m          ~~~~~~[0m
-[7m 37[0m             type="email"
+[7m 36[0m             type="email"
 [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~[0m
 [7m...[0m 
-[7m 42[0m             required
+[7m 41[0m             required
 [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~[0m
-[7m 43[0m           />
+[7m 42[0m           />
 [7m   [0m [91m~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/Login.tsx[0m:[93m44[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m43[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m 44[0m           <input
+[7m 43[0m           <input
 [7m   [0m [91m          ~~~~~~[0m
-[7m 45[0m             type="password"
+[7m 44[0m             type="password"
 [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 [7m...[0m 
-[7m 50[0m             required
+[7m 49[0m             required
 [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~[0m
-[7m 51[0m           />
+[7m 50[0m           />
 [7m   [0m [91m~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/Login.tsx[0m:[93m52[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/Login.tsx[0m:[93m51[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m 52[0m           <button
+[7m 51[0m           <button
 [7m   [0m [91m          ~~~~~~~[0m
-[7m 53[0m             type="submit"
+[7m 52[0m             type="submit"
 [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 [7m...[0m 
-[7m 55[0m             className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+[7m 54[0m             className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
 [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-[7m 56[0m           >
+[7m 55[0m           >
 [7m   [0m [91m~~~~~~~~~~~[0m
 
+[96msrc/supabaseClient.ts[0m:[93m3[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
 
-Found 10 errors in the same file, starting at: src/pages/Dashboard/Login.tsx[90m:3[0m
+[7m3[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
+[7m [0m [91m                    ~~~~~~~~~~~[0m
 
+[96msrc/supabaseClient.ts[0m:[93m3[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+
+[7m3[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
+[7m [0m [91m                                ~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m4[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+
+[7m4[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY!;
+[7m [0m [91m                        ~~~~~~~~~~~[0m
+
+[96msrc/supabaseClient.ts[0m:[93m4[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+
+[7m4[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY!;
+[7m [0m [91m                                    ~~~[0m
+
+
+Found 13 errors in 2 files.
+
+Errors  Files
+     9  src/pages/Dashboard/Login.tsx[90m:1[0m
+     4  src/supabaseClient.ts[90m:3[0m
 Running ESLint check...
 
 Oops! Something went wrong! :(
@@ -395,88 +388,95 @@ Done ✅
 
 ---- Checking src/pages/Dashboard/SupplierDashboard.tsx ----
 Running TypeScript check...
-[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m6[0m:[93m43[0m - [91merror[0m[90m TS2339: [0mProperty 'orders' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m41[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m6[0m type Order = Database["public"]["Tables"]["orders"]["Row"];
-[7m [0m [91m                                          ~~~~~~~~[0m
-
-[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m32[0m:[93m15[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ status: string; }' is not assignable to parameter of type 'never'.
-
-[7m32[0m       .update({ status: "fulfilled" })
-[7m  [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~[0m
-
-[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m42[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
-
-[7m42[0m     <div className="p-4">
+[7m41[0m     <div className="p-4">
 [7m  [0m [91m    ~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m43[0m:[93m7[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m42[0m:[93m7[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m43[0m       <h1 className="text-2xl font-bold mb-4">Supplier Dashboard</h1>
-[7m  [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m42[0m       <h1 className="text-2xl font-bold mb-4 text-red-700">
+[7m  [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m44[0m:[93m19[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m46[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m44[0m       {loading && <p>Loading...</p>}
-[7m  [0m [91m                  ~~~[0m
+[7m46[0m         <p>Loading...</p>
+[7m  [0m [91m        ~~~[0m
 
-[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m47[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m48[0m:[93m9[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m47[0m         <>
+[7m48[0m         <>
 [7m  [0m [91m        ~~[0m
-
-[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m48[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
-
-[7m48[0m           <h2 className="text-xl font-semibold mb-2">Orders</h2>
-[7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
 [96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m49[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m49[0m           <ul>
-[7m  [0m [91m          ~~~~[0m
+[7m49[0m           <h2 className="text-xl font-semibold mb-2">Orders</h2>
+[7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m51[0m:[93m15[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m50[0m:[93m11[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m51[0m               <li key={o.id} className="mb-2">
-[7m  [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m50[0m           <ul className="divide-y divide-gray-200">
+[7m  [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m54[0m:[93m19[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m52[0m:[93m15[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
-[7m54[0m                   <button
+[7m52[0m               <li key={o.id} className="py-2 flex justify-between items-center">
+[7m  [0m [91m              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m53[0m:[93m17[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m53[0m                 <span>
+[7m  [0m [91m                ~~~~~~[0m
+
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m55[0m:[93m19[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m 55[0m                   <span
+[7m   [0m [91m                  ~~~~~[0m
+[7m 56[0m                     className={`font-semibold ${
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m 58[0m                     }`}
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m 59[0m                   >
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/pages/Dashboard/SupplierDashboard.tsx[0m:[93m64[0m:[93m19[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
+
+[7m64[0m                   <button
 [7m  [0m [91m                  ~~~~~~~[0m
-[7m55[0m                     className="ml-2 px-2 py-1 bg-green-500 text-white rounded"
-[7m  [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-[7m56[0m                     onClick={() => markAsFulfilled(o.id)}
+[7m65[0m                     className="ml-2 px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
+[7m  [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m66[0m                     onClick={() => markAsFulfilled(o.id)}
 [7m  [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-[7m57[0m                   >
+[7m67[0m                   >
 [7m  [0m [91m~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+[96msrc/supabaseClient.ts[0m:[93m3[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
 
-[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m3[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
 [7m [0m [91m                    ~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+[96msrc/supabaseClient.ts[0m:[93m3[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
 
-[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m3[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
 [7m [0m [91m                                ~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+[96msrc/supabaseClient.ts[0m:[93m4[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
 
-[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m4[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY!;
 [7m [0m [91m                        ~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+[96msrc/supabaseClient.ts[0m:[93m4[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
 
-[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m4[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY!;
 [7m [0m [91m                                    ~~~[0m
 
 
 Found 14 errors in 2 files.
 
 Errors  Files
-    10  src/pages/Dashboard/SupplierDashboard.tsx[90m:6[0m
-     4  src/supabaseClient.ts[90m:5[0m
+    10  src/pages/Dashboard/SupplierDashboard.tsx[90m:41[0m
+     4  src/supabaseClient.ts[90m:3[0m
 Running ESLint check...
 
 Oops! Something went wrong! :(
@@ -497,16 +497,6 @@ Done ✅
 
 ---- Checking src/pages/Dashboard/CEODashboard.tsx ----
 Running TypeScript check...
-[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m6[0m:[93m42[0m - [91merror[0m[90m TS2339: [0mProperty 'sales' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
-
-[7m6[0m type Sale = Database["public"]["Tables"]["sales"]["Row"];
-[7m [0m [91m                                         ~~~~~~~[0m
-
-[96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m7[0m:[93m45[0m - [91merror[0m[90m TS2339: [0mProperty 'products' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
-
-[7m7[0m type Product = Database["public"]["Tables"]["products"]["Row"];
-[7m [0m [91m                                            ~~~~~~~~~~[0m
-
 [96msrc/pages/Dashboard/CEODashboard.tsx[0m:[93m49[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
 [7m49[0m     <div className="p-4">
@@ -572,32 +562,32 @@ Running TypeScript check...
 [7m67[0m               <li key={s.id}>
 [7m  [0m [91m              ~~~~~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+[96msrc/supabaseClient.ts[0m:[93m3[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
 
-[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m3[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
 [7m [0m [91m                    ~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+[96msrc/supabaseClient.ts[0m:[93m3[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
 
-[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m3[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
 [7m [0m [91m                                ~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+[96msrc/supabaseClient.ts[0m:[93m4[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
 
-[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m4[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY!;
 [7m [0m [91m                        ~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+[96msrc/supabaseClient.ts[0m:[93m4[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
 
-[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m4[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY!;
 [7m [0m [91m                                    ~~~[0m
 
 
-Found 19 errors in 2 files.
+Found 17 errors in 2 files.
 
 Errors  Files
-    15  src/pages/Dashboard/CEODashboard.tsx[90m:6[0m
-     4  src/supabaseClient.ts[90m:5[0m
+    13  src/pages/Dashboard/CEODashboard.tsx[90m:49[0m
+     4  src/supabaseClient.ts[90m:3[0m
 Running ESLint check...
 
 Oops! Something went wrong! :(
@@ -618,16 +608,6 @@ Done ✅
 
 ---- Checking src/pages/Dashboard/AdminDashboard.tsx ----
 Running TypeScript check...
-[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m6[0m:[93m45[0m - [91merror[0m[90m TS2339: [0mProperty 'products' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
-
-[7m6[0m type Product = Database["public"]["Tables"]["products"]["Row"];
-[7m [0m [91m                                            ~~~~~~~~~~[0m
-
-[96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m7[0m:[93m42[0m - [91merror[0m[90m TS2339: [0mProperty 'sales' does not exist on type '{ users: { Row: { id: string; email: string; role_id: string; }; Insert: { id?: string; email: string; role_id: string; }; Update: { id?: string; email?: string; role_id?: string; }; }; }'.
-
-[7m7[0m type Sale = Database["public"]["Tables"]["sales"]["Row"];
-[7m [0m [91m                                         ~~~~~~~[0m
-
 [96msrc/pages/Dashboard/AdminDashboard.tsx[0m:[93m58[0m:[93m5[0m - [91merror[0m[90m TS17004: [0mCannot use JSX unless the '--jsx' flag is provided.
 
 [7m58[0m     <div className="p-4">
@@ -688,32 +668,32 @@ Running TypeScript check...
 [7m80[0m             <p className="font-bold">Total Sales: N${total.toFixed(2)}</p>
 [7m  [0m [91m            ~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+[96msrc/supabaseClient.ts[0m:[93m3[0m:[93m21[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
 
-[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m3[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
 [7m [0m [91m                    ~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m5[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+[96msrc/supabaseClient.ts[0m:[93m3[0m:[93m33[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
 
-[7m5[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+[7m3[0m const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
 [7m [0m [91m                                ~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
+[96msrc/supabaseClient.ts[0m:[93m4[0m:[93m25[0m - [91merror[0m[90m TS1343: [0mThe 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', or 'nodenext'.
 
-[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m4[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY!;
 [7m [0m [91m                        ~~~~~~~~~~~[0m
 
-[96msrc/supabaseClient.ts[0m:[93m6[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
+[96msrc/supabaseClient.ts[0m:[93m4[0m:[93m37[0m - [91merror[0m[90m TS2339: [0mProperty 'env' does not exist on type 'ImportMeta'.
 
-[7m6[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
+[7m4[0m const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY!;
 [7m [0m [91m                                    ~~~[0m
 
 
-Found 18 errors in 2 files.
+Found 16 errors in 2 files.
 
 Errors  Files
-    14  src/pages/Dashboard/AdminDashboard.tsx[90m:6[0m
-     4  src/supabaseClient.ts[90m:5[0m
+    12  src/pages/Dashboard/AdminDashboard.tsx[90m:58[0m
+     4  src/supabaseClient.ts[90m:3[0m
 Running ESLint check...
 
 Oops! Something went wrong! :(

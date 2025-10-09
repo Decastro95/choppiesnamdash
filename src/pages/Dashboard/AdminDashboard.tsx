@@ -1,7 +1,7 @@
 // src/pages/Dashboard/AdminDashboard.tsx
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
-import { Database } from "../../types/supabase";
+import type { Database } from "../../types/supabase"; // ✅ type-only import
 
 type Product = Database["public"]["Tables"]["products"]["Row"];
 type Sale = Database["public"]["Tables"]["sales"]["Row"];

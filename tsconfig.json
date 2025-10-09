@@ -1,20 +1,34 @@
 {
   "compilerOptions": {
+    /* Modern ECMAScript Target */
     "target": "ESNext",
-    "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+
+    /* React / JSX */
+    "jsx": "react-jsx",
+    "useDefineForClassFields": true,
+
+    /* Type Checking & Imports */
     "strict": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+
+    /* Module system */
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+
+    /* Output Control */
     "noEmit": true,
-    "jsx": "react-jsx"
+
+    /* Performance */
+    "incremental": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

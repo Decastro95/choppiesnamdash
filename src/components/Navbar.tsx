@@ -1,63 +1,40 @@
-// src/components/Navbar.tsx
-import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 
-type Role = "Admin" | "Manager" | "Cashier" | "CEO" | "Supplier";
+interface Role {
+  name: string;
+}
 
 export default function Navbar() {
-  const [role, setRole] = useState<Role | null>(null);
-  const navigate = useNavigate();
+  const [user, setUser] = useState<any>(null);
+  const [roles, setRoles] = useState<Role[]>([]);
 
   useEffect(() => {
-    const getUserRole = async () => {
-      const user = supabase.auth.user();
-      if (!user) return navigate("/login");
+    const fetchData = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
 
-      const { data, error } = await supabase
-        .from("users")
-        .select("role_id, roles(name)")
-        .eq("id", user.id)
-        .single();
-
-      if (error) console.error(error);
-      if (data?.roles?.name) setRole(data.roles.name as Role);
+      // Optional: fetch user role(s) from the database
+      const { data: rolesData } = await supabase.from("roles").select("name");
+      setRoles(rolesData ?? []);
     };
 
-    getUserRole();
-  }, [navigate]);
+    fetchData();
+  }, []);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate("/login");
-  };
+  const roleName = roles?.[0]?.name ?? "Guest";
 
   return (
-    <nav className="bg-blue-600 text-white p-4 flex justify-between items-center">
-      <div className="flex space-x-4">
-        <Link to="/" className="font-bold">
-          Choppies POS
-        </Link>
-
-        {role === "Admin" && (
-          <>
-            <Link to="/admin">Admin Dashboard</Link>
-            <Link to="/manager">Manager Dashboard</Link>
-            <Link to="/ceo">CEO Dashboard</Link>
-            <Link to="/supplier">Supplier Dashboard</Link>
-            <Link to="/cashier">Cashier POS</Link>
-          </>
-        )}
-
-        {role === "Manager" && <Link to="/manager">Manager Dashboard</Link>}
-        {role === "Cashier" && <Link to="/cashier">Cashier POS</Link>}
-        {role === "CEO" && <Link to="/ceo">CEO Dashboard</Link>}
-        {role === "Supplier" && <Link to="/supplier">Supplier Dashboard</Link>}
+    <nav className="w-full bg-red-700 text-white shadow-md">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-3">
+        <h1 className="text-xl font-bold tracking-wide">Choppies Namibia</h1>
+        <div className="flex flex-col items-end text-sm">
+          <span>{user?.email ?? "Not logged in"}</span>
+          <span className="italic text-gray-200">{roleName}</span>
+        </div>
       </div>
-
-      <button onClick={handleLogout} className="bg-red-500 px-3 py-1 rounded">
-        Logout
-      </button>
     </nav>
   );
 }
