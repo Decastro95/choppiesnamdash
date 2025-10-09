@@ -14,10 +14,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
   useEffect(() => {
     const fetchRole = async () => {
       const { data, error } = await supabase.auth.getUser();
-      if (error || !data?.user) {
-        setUserRole(null);
+      if (error || !data.user) {
+        setUserRole("Guest");
       } else {
-        // Example: fetch role from metadata
         const role = data.user.user_metadata?.role || "Guest";
         setUserRole(role);
       }
@@ -28,7 +27,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
 
   if (loading) return <p>Loading...</p>;
 
-  if (allowedRoles && !allowedRoles.includes(userRole ?? "")) {
+  if (allowedRoles && !allowedRoles.includes(userRole!)) {
     return <Navigate to="/unauthorized" replace />;
   }
 
