@@ -1,38 +1,38 @@
-import type { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 
 interface ProtectedRouteProps {
-  children: ReactNode;
+  children: React.ReactNode;
+  allowedRoles?: string[];
 }
 
-export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const [user, setUser] = useState<any>(null);
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles }) => {
+  const [userRole, setUserRole] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
+    const fetchRole = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (error || !data?.user) {
+        setUserRole(null);
+      } else {
+        // Example: fetch role from metadata
+        const role = data.user.user_metadata?.role || "Guest";
+        setUserRole(role);
+      }
       setLoading(false);
     };
-    fetchUser();
+    fetchRole();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen text-gray-700">
-        Loading...
-      </div>
-    );
-  }
+  if (loading) return <p>Loading...</p>;
 
-  if (!user) {
-    return <Navigate to="/login" replace />;
+  if (allowedRoles && !allowedRoles.includes(userRole ?? "")) {
+    return <Navigate to="/unauthorized" replace />;
   }
 
   return <>{children}</>;
-}
+};
+
+export default ProtectedRoute;

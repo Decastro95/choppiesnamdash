@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
-import type { Database } from "../../types/supabase"; // ✅ type-only import
+import type { Database } from "../../types/supabase";
 
 type Product = Database["public"]["Tables"]["products"]["Row"];
-type Sale = Database["public"]["Tables"]["sales"]["Row"];
+type SaleInsert = Database["public"]["Tables"]["sales"]["Insert"];
 
 export default function CashierDashboard() {
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<Product[]>([]);
-  const [sales, setSales] = useState<Sale[]>([]);
   const [loading, setLoading] = useState(true);
 
   const ZERO_RATED = ["maize meal", "bread", "mahango", "fresh milk"];
@@ -17,44 +16,31 @@ export default function CashierDashboard() {
     const fetchProducts = async () => {
       setLoading(true);
       const { data: prodData, error: prodError } = await supabase
-        .from("products")
+        .from<Product>("products")
         .select("*");
       if (prodError) console.error(prodError);
       if (prodData) setProducts(prodData);
-
-      const { data: salesData, error: salesError } = await supabase
-        .from("sales")
-        .select("*");
-      if (salesError) console.error(salesError);
-      if (salesData) setSales(salesData);
-
       setLoading(false);
     };
 
     fetchProducts();
   }, []);
 
-  // Add product to cart
   const addToCart = (product: Product) => setCart((prev) => [...prev, product]);
-
-  // Remove product from cart
   const removeFromCart = (productId: number | string) => {
-    const pid = Number(productId); // ✅ ensure numeric comparison
+    const pid = Number(productId);
     setCart((prev) => prev.filter((p) => Number(p.id) !== pid));
   };
 
-  // Calculate totals
   const calculateTotals = () => {
     let subtotal = 0;
     let vat = 0;
     let bagLevy = 0;
 
     cart.forEach((item) => {
-      const price = Number(item.price) || 0; // ✅ ensure number
+      const price = Number(item.price) || 0;
       subtotal += price;
-      if (!ZERO_RATED.includes(item.name.toLowerCase())) {
-        vat += price * 0.15;
-      }
+      if (!ZERO_RATED.includes(item.name.toLowerCase())) vat += price * 0.15;
       if (item.name.toLowerCase().includes("plastic bag")) bagLevy += 1;
     });
 
@@ -64,14 +50,15 @@ export default function CashierDashboard() {
 
   const { subtotal, vat, bagLevy, total } = calculateTotals();
 
-  // Checkout
   const checkout = async () => {
     for (const item of cart) {
-      const { error } = await supabase.from("sales").insert({
-        product_id: Number(item.id),
-        total_price: Number(item.price),
-        created_at: new Date().toISOString(),
-      });
+      const { error } = await supabase
+        .from<SaleInsert>("sales")
+        .insert({
+          product_id: Number(item.id),
+          total_price: Number(item.price),
+          created_at: new Date().toISOString(),
+        });
       if (error) console.error(error);
     }
     alert(`Sale completed. Total: N$${total.toFixed(2)}`);
@@ -80,9 +67,7 @@ export default function CashierDashboard() {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4 text-red-700">
-        Cashier Dashboard
-      </h1>
+      <h1 className="text-2xl font-bold mb-4 text-red-700">Cashier Dashboard</h1>
 
       {loading ? (
         <p>Loading products...</p>
@@ -123,9 +108,7 @@ export default function CashierDashboard() {
             <p>Subtotal: N${subtotal.toFixed(2)}</p>
             <p>VAT (15%): N${vat.toFixed(2)}</p>
             <p>Plastic Bag Levy: N${bagLevy.toFixed(2)}</p>
-            <p className="font-bold text-lg text-red-700">
-              Total: N${total.toFixed(2)}
-            </p>
+            <p className="font-bold text-lg text-red-700">Total: N${total.toFixed(2)}</p>
             <button
               className="mt-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
               onClick={checkout}

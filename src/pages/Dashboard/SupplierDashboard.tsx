@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
-import type { Database } from "../../types/supabase"; // ✅ type-only import
+import type { Database } from "../../types/supabase";
 
 type Order = Database["public"]["Tables"]["orders"]["Row"];
+type OrderUpdate = Database["public"]["Tables"]["orders"]["Update"];
 
 export default function SupplierDashboard() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -11,37 +12,32 @@ export default function SupplierDashboard() {
   useEffect(() => {
     const fetchOrders = async () => {
       setLoading(true);
-      const { data, error } = await supabase.from("orders").select("*");
+      const { data, error } = await supabase.from<Order>("orders").select("*");
       if (error) console.error(error);
       if (data) setOrders(data);
       setLoading(false);
     };
-
     fetchOrders();
   }, []);
 
   const markAsFulfilled = async (orderId: number | string) => {
-    const id = Number(orderId); // ✅ ensure numeric comparison
+    const id = Number(orderId);
     const { error } = await supabase
-      .from("orders")
+      .from<OrderUpdate>("orders")
       .update({ status: "fulfilled" })
       .eq("id", id);
 
     if (error) console.error(error);
-    else {
+    else
       setOrders((prev) =>
-        prev.map((o) =>
-          Number(o.id) === id ? { ...o, status: "fulfilled" } : o
-        )
+        prev.map((o) => (Number(o.id) === id ? { ...o, status: "fulfilled" } : o))
       );
-    }
   };
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4 text-red-700">
-        Supplier Dashboard
-      </h1>
+      <h1 className="text-2xl font-bold mb-4 text-red-700">Supplier Dashboard</h1>
+
       {loading ? (
         <p>Loading...</p>
       ) : (
