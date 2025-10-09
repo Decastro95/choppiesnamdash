@@ -1,24 +1,63 @@
-import React, { useState } from 'react';
-import { supabase } from '../../supabaseClient';
+import { useState } from "react";
+import { supabase } from "../supabaseClient";
+import { useNavigate } from "react-router-dom";
 
-const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
+    setErrorMsg("");
 
-    const { error } = await supabase.auth.signInWithPassword({
+    // Sign in with email & password
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    if (error) {
-      setError(error.message);
+    if (error || !data.user) {
+      setErrorMsg(error?.message || "Login failed");
+      setLoading(false);
+      return;
+    }
+
+    // Fetch user role from 'users' table
+    const { data: profile, error: profileError } = await supabase
+      .from("users")
+      .select("role")
+      .eq("id", data.user.id)
+      .single();
+
+    if (profileError || !profile) {
+      setErrorMsg("Failed to fetch user role");
+      setLoading(false);
+      return;
+    }
+
+    // Redirect based on role
+    switch (profile.role) {
+      case "admin":
+        navigate("/admin");
+        break;
+      case "manager":
+        navigate("/manager");
+        break;
+      case "cashier":
+        navigate("/cashier");
+        break;
+      case "ceo":
+        navigate("/ceo");
+        break;
+      case "supplier":
+        navigate("/supplier");
+        break;
+      default:
+        navigate("/unauthorized");
     }
 
     setLoading(false);
@@ -26,39 +65,42 @@ const Login: React.FC = () => {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white shadow-lg rounded-2xl p-8 w-96">
-        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Choppies POS Login
-        </h1>
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-        <form onSubmit={handleLogin} className="space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
-            required
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
-      </div>
+      <form
+        onSubmit={handleLogin}
+        className="bg-white p-8 rounded shadow-md w-full max-w-sm"
+      >
+        <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
+
+        {errorMsg && (
+          <p className="text-red-600 mb-4 text-center">{errorMsg}</p>
+        )}
+
+        <label className="block mb-2 font-semibold">Email</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full border p-2 rounded mb-4"
+          required
+        />
+
+        <label className="block mb-2 font-semibold">Password</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full border p-2 rounded mb-6"
+          required
+        />
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+        >
+          {loading ? "Logging in..." : "Login"}
+        </button>
+      </form>
     </div>
   );
-};
-
-export default Login;
+}

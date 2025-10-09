@@ -1,3 +1,4 @@
+// src/pages/Dashboard/SupplierDashboard.tsx
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import type { Database } from "../../types/supabase";
@@ -12,9 +13,9 @@ export default function SupplierDashboard() {
   useEffect(() => {
     const fetchOrders = async () => {
       setLoading(true);
-      const { data, error } = await supabase.from<Order>("orders").select("*");
+      const { data, error } = await supabase.from("orders").select("*");
       if (error) console.error(error);
-      if (data) setOrders(data);
+      if (data) setOrders(data as Order[]);
       setLoading(false);
     };
     fetchOrders();
@@ -23,8 +24,8 @@ export default function SupplierDashboard() {
   const markAsFulfilled = async (orderId: number | string) => {
     const id = Number(orderId);
     const { error } = await supabase
-      .from<OrderUpdate>("orders")
-      .update({ status: "fulfilled" })
+      .from("orders")
+      .update({ status: "fulfilled" } as Partial<OrderUpdate>)
       .eq("id", id);
 
     if (error) console.error(error);

@@ -1,35 +1,31 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// src/routes/AppRoutes.tsx
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "../components/ProtectedRoute";
 import AdminDashboard from "../pages/Dashboard/AdminDashboard";
-import CEODashboard from "../pages/Dashboard/CEODashboard";
 import ManagerDashboard from "../pages/Dashboard/ManagerDashboard";
 import CashierDashboard from "../pages/Dashboard/CashierDashboard";
+import CEODashboard from "../pages/Dashboard/CEODashboard";
 import SupplierDashboard from "../pages/Dashboard/SupplierDashboard";
-import ProtectedRoute from "../components/ProtectedRoute";
+import LoginPage from "../pages/Auth/LoginPage";
+import UnauthorizedPage from "../pages/Auth/UnauthorizedPage"; // create a simple component if missing
 
 export default function AppRoutes() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
+        <Route path="/" element={<LoginPage />} />
         <Route
           path="/admin"
           element={
-            <ProtectedRoute allowedRoles={["Admin"]}>
+            <ProtectedRoute allowedRoles={["admin"]}>
               <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/ceo"
-          element={
-            <ProtectedRoute allowedRoles={["CEO"]}>
-              <CEODashboard />
             </ProtectedRoute>
           }
         />
         <Route
           path="/manager"
           element={
-            <ProtectedRoute allowedRoles={["Manager"]}>
+            <ProtectedRoute allowedRoles={["manager"]}>
               <ManagerDashboard />
             </ProtectedRoute>
           }
@@ -37,20 +33,29 @@ export default function AppRoutes() {
         <Route
           path="/cashier"
           element={
-            <ProtectedRoute allowedRoles={["Cashier"]}>
+            <ProtectedRoute allowedRoles={["cashier"]}>
               <CashierDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/ceo"
+          element={
+            <ProtectedRoute allowedRoles={["ceo"]}>
+              <CEODashboard />
             </ProtectedRoute>
           }
         />
         <Route
           path="/supplier"
           element={
-            <ProtectedRoute allowedRoles={["Supplier"]}>
+            <ProtectedRoute allowedRoles={["supplier"]}>
               <SupplierDashboard />
             </ProtectedRoute>
           }
         />
+        <Route path="/unauthorized" element={<UnauthorizedPage />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }

@@ -1,59 +1,71 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/Auth/LoginPage";
+import ProtectedRoute from "./pages/Dashboard/ProtectedRoute";
 import AdminDashboard from "./pages/Dashboard/AdminDashboard";
-import CashierDashboard from "./pages/Dashboard/CashierDashboard";
+import CEODashboard from "./pages/Dashboard/CEODashboard";
 import ManagerDashboard from "./pages/Dashboard/ManagerDashboard";
 import SupplierDashboard from "./pages/Dashboard/SupplierDashboard";
-import CEODashboard from "./pages/Dashboard/CEODashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
+import CashierDashboard from "./pages/Dashboard/CashierDashboard";
+import ActivityLogPage from "./pages/Dashboard/ActivityLogPage";
 
-function App() {
+export default function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
+        <Route path="/login" element={<LoginPage />} />
+
         <Route
-          path="/admin"
+          path="/dashboard/admin"
           element={
-            <ProtectedRoute allowedRoles={["Admin"]}>
+            <ProtectedRoute allowedRoles={["admin"]}>
               <AdminDashboard />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/cashier"
+          path="/dashboard/ceo"
           element={
-            <ProtectedRoute allowedRoles={["Cashier"]}>
-              <CashierDashboard />
+            <ProtectedRoute allowedRoles={["ceo"]}>
+              <CEODashboard />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/manager"
+          path="/dashboard/manager"
           element={
-            <ProtectedRoute allowedRoles={["Manager"]}>
+            <ProtectedRoute allowedRoles={["manager"]}>
               <ManagerDashboard />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/supplier"
+          path="/dashboard/supplier"
           element={
-            <ProtectedRoute allowedRoles={["Supplier"]}>
+            <ProtectedRoute allowedRoles={["supplier"]}>
               <SupplierDashboard />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/ceo"
+          path="/dashboard/cashier"
           element={
-            <ProtectedRoute allowedRoles={["CEO"]}>
-              <CEODashboard />
+            <ProtectedRoute allowedRoles={["cashier"]}>
+              <CashierDashboard />
             </ProtectedRoute>
           }
         />
-        <Route path="*" element={<p>Page Not Found</p>} />
+
+        <Route
+          path="/dashboard/activity-log"
+          element={
+            <ProtectedRoute allowedRoles={["admin", "ceo"]}>
+              <ActivityLogPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="*" element={<LoginPage />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
-
-export default App;

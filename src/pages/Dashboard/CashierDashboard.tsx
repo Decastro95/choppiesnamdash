@@ -1,3 +1,4 @@
+// src/pages/Dashboard/CashierDashboard.tsx
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import type { Database } from "../../types/supabase";
@@ -16,10 +17,11 @@ export default function CashierDashboard() {
     const fetchProducts = async () => {
       setLoading(true);
       const { data: prodData, error: prodError } = await supabase
-        .from<Product>("products")
+        .from("products")
         .select("*");
+
       if (prodError) console.error(prodError);
-      if (prodData) setProducts(prodData);
+      if (prodData) setProducts(prodData as Product[]);
       setLoading(false);
     };
 
@@ -38,10 +40,10 @@ export default function CashierDashboard() {
     let bagLevy = 0;
 
     cart.forEach((item) => {
-      const price = Number(item.price) || 0;
+      const price = Number((item as any).price) || 0;
       subtotal += price;
-      if (!ZERO_RATED.includes(item.name.toLowerCase())) vat += price * 0.15;
-      if (item.name.toLowerCase().includes("plastic bag")) bagLevy += 1;
+      if (!ZERO_RATED.includes((item.name || "").toLowerCase())) vat += price * 0.15;
+      if ((item.name || "").toLowerCase().includes("plastic bag")) bagLevy += 1;
     });
 
     const total = subtotal + vat + bagLevy;
@@ -52,15 +54,19 @@ export default function CashierDashboard() {
 
   const checkout = async () => {
     for (const item of cart) {
-      const { error } = await supabase
-        .from<SaleInsert>("sales")
-        .insert({
-          product_id: Number(item.id),
-          total_price: Number(item.price),
-          created_at: new Date().toISOString(),
-        });
+      const payload: SaleInsert = {
+        product_id: Number(item.id),
+        quantity: 1,
+        total_price: Number(item.price),
+        vat_amount: (!ZERO_RATED.includes(item.name.toLowerCase()) ? Number(item.price) * 0.15 : 0),
+        plastic_bag_fee: (item.name.toLowerCase().includes("plastic bag") ? 1 : 0),
+        created_at: new Date().toISOString(),
+      };
+
+      const { error } = await supabase.from("sales").insert([payload]);
       if (error) console.error(error);
     }
+    // eslint-disable-next-line no-alert
     alert(`Sale completed. Total: N$${total.toFixed(2)}`);
     setCart([]);
   };
@@ -109,10 +115,7 @@ export default function CashierDashboard() {
             <p>VAT (15%): N${vat.toFixed(2)}</p>
             <p>Plastic Bag Levy: N${bagLevy.toFixed(2)}</p>
             <p className="font-bold text-lg text-red-700">Total: N${total.toFixed(2)}</p>
-            <button
-              className="mt-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-              onClick={checkout}
-            >
+            <button className="mt-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" onClick={checkout}>
               Checkout
             </button>
           </div>

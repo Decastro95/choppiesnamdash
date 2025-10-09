@@ -1,7 +1,7 @@
 // src/pages/Dashboard/AdminDashboard.tsx
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
-import type { Database } from "../../types/supabase"; // ✅ type-only import
+import type { Database } from "../../types/supabase";
 
 type Product = Database["public"]["Tables"]["products"]["Row"];
 type Sale = Database["public"]["Tables"]["sales"]["Row"];
@@ -16,17 +16,13 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const { data: prodData, error: prodError } = await supabase
-        .from("products")
-        .select("*");
+      const { data: prodData, error: prodError } = await supabase.from("products").select("*");
       if (prodError) console.error(prodError);
-      if (prodData) setProducts(prodData);
+      if (prodData) setProducts(prodData as Product[]);
 
-      const { data: salesData, error: salesError } = await supabase
-        .from("sales")
-        .select("*");
+      const { data: salesData, error: salesError } = await supabase.from("sales").select("*");
       if (salesError) console.error(salesError);
-      if (salesData) setSales(salesData);
+      if (salesData) setSales(salesData as Sale[]);
 
       setLoading(false);
     };
@@ -42,9 +38,10 @@ export default function AdminDashboard() {
     sales.forEach((sale) => {
       const product = products.find((p) => p.id === sale.product_id);
       if (!product) return;
-      subtotal += product.price;
+      const price = Number(product.price) || 0;
+      subtotal += price;
       if (!ZERO_RATED.includes(product.name.toLowerCase())) {
-        vat += product.price * 0.15;
+        vat += price * 0.15;
       }
       if (product.name.toLowerCase().includes("plastic bag")) bagLevy += 1;
     });
@@ -67,7 +64,7 @@ export default function AdminDashboard() {
               const product = products.find((p) => p.id === s.product_id);
               return (
                 <li key={s.id}>
-                  {product?.name || "Unknown"} - N${product?.price.toFixed(2)}
+                  {product?.name || "Unknown"} - N${product?.price?.toFixed?.(2) ?? "0.00"}
                 </li>
               );
             })}
