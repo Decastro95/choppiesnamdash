@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Fetch latest changes from remote
+git fetch origin
+
+# Merge remote 'main' into local 'main'
+git merge origin/main
+
+# Check if merge was successful
+if [ $? -eq 0 ]; then
+  # Stage all changes
+  git add .
+
+  # Commit your changes with timestamp
+  git commit -m "Master commit: $(date '+%Y-%m-%d %H:%M:%S')" --no-verify
+
+  # Push to remote
+  git push origin $(git branch --show-current)
+else
+  echo "Merge conflicts detected. Please resolve them before pushing."
+fi
