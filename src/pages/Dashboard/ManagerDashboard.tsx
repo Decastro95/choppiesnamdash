@@ -1,4 +1,3 @@
-// src/pages/Dashboard/ManagerDashboard.tsx
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import type { Database } from "../../types/supabase";
@@ -16,13 +15,17 @@ export default function ManagerDashboard() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const { data: prodData, error: prodError } = await supabase.from("products").select("*");
-      if (prodError) console.error(prodError);
-      if (prodData) setProducts(prodData as Product[]);
+      const { data: prodData, error: prodError } = await supabase
+        .from<Product>("products")
+        .select("*");
+      if (prodError) console.error("Manager fetch products error:", prodError);
+      if (prodData) setProducts(prodData);
 
-      const { data: salesData, error: salesError } = await supabase.from("sales").select("*");
-      if (salesError) console.error(salesError);
-      if (salesData) setSales(salesData as Sale[]);
+      const { data: salesData, error: salesError } = await supabase
+        .from<Sale>("sales")
+        .select("*");
+      if (salesError) console.error("Manager fetch sales error:", salesError);
+      if (salesData) setSales(salesData);
 
       setLoading(false);
     };
@@ -36,14 +39,14 @@ export default function ManagerDashboard() {
     let bagLevy = 0;
 
     sales.forEach((sale) => {
-      const product = products.find((p) => p.id === sale.product_id);
+      const product = products.find((p) => Number(p.id) === Number(sale.product_id));
       if (!product) return;
-      const price = Number(product.price) || 0;
+      const price = Number((product as any).price) || 0;
       subtotal += price;
-      if (!ZERO_RATED.includes(product.name.toLowerCase())) {
+      if (!ZERO_RATED.includes((product.name || "").toLowerCase())) {
         vat += price * 0.15;
       }
-      if (product.name.toLowerCase().includes("plastic bag")) bagLevy += 1;
+      if ((product.name || "").toLowerCase().includes("plastic bag")) bagLevy += 1;
     });
 
     return { subtotal, vat, bagLevy, total: subtotal + vat + bagLevy };
@@ -61,10 +64,11 @@ export default function ManagerDashboard() {
           <h2 className="text-xl font-semibold mb-2">Sales Overview</h2>
           <ul>
             {sales.map((s) => {
-              const product = products.find((p) => p.id === s.product_id);
+              const product = products.find((p) => Number(p.id) === Number(s.product_id));
+              const price = product ? Number((product as any).price) || 0 : 0;
               return (
                 <li key={s.id}>
-                  {product?.name || "Unknown"} - N${product?.price?.toFixed?.(2) ?? "0.00"}
+                  {product?.name || "Unknown"} - N${price.toFixed(2)}
                 </li>
               );
             })}

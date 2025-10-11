@@ -1,44 +1,56 @@
-import { useEffect, useState } from "react";
-import { supabase } from "../../supabaseClient";
+// src/pages/Dashboard/ProtectedRoute.tsx
+import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient";
 
 interface ProtectedRouteProps {
-  children: JSX.Element;
-  allowedRoles: string[];
+  children: React.ReactNode;
+  allowedRoles?: string[];
 }
 
-export default function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
-  const [authorized, setAuthorized] = useState<boolean | null>(null);
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles }) => {
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkSession = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        setAuthorized(false);
+    const fetchRole = async () => {
+      setLoading(true);
+      const { data, error } = await supabase.auth.getUser();
+      if (error || !data?.user) {
+        setUserRole(null);
+        setLoading(false);
         return;
       }
 
-      const { data: userData } = await supabase
+      // Attempt to read role from user_metadata or your users table
+      const metadataRole = (data.user.user_metadata as any)?.role;
+      if (typeof metadataRole === "string") {
+        setUserRole(metadataRole.toLowerCase());
+        setLoading(false);
+        return;
+      }
+
+      // fallback: query our "users" table (if you maintain it)
+      const { data: userRow } = await supabase
         .from("users")
         .select("role")
-        .eq("email", user.email)
-        .single();
+        .eq("email", data.user.email ?? "")
+        .maybeSingle();
 
-      if (userData && allowedRoles.includes(userData.role.toLowerCase())) {
-        setAuthorized(true);
-      } else {
-        setAuthorized(false);
-      }
+      const roleFromRow = (userRow as any)?.role;
+      setUserRole(typeof roleFromRow === "string" ? roleFromRow.toLowerCase() : null);
+      setLoading(false);
     };
 
-    checkSession();
-  }, [allowedRoles]);
+    fetchRole();
+  }, []);
 
-  if (authorized === null) return <p>Checking permissions...</p>;
-  if (!authorized) return <Navigate to="/login" replace />;
+  if (loading) return <p>Loading...</p>;
+  if (allowedRoles && !allowedRoles.includes(userRole ?? "")) {
+    return <Navigate to="/unauthorized" replace />;
+  }
 
-  return children;
-}
+  return <>{children}</>;
+};
+
+export default ProtectedRoute;

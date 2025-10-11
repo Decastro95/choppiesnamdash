@@ -1,4 +1,3 @@
-// src/pages/Dashboard/SupplierDashboard.tsx
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import type { Database } from "../../types/supabase";
@@ -13,9 +12,9 @@ export default function SupplierDashboard() {
   useEffect(() => {
     const fetchOrders = async () => {
       setLoading(true);
-      const { data, error } = await supabase.from("orders").select("*");
-      if (error) console.error(error);
-      if (data) setOrders(data as Order[]);
+      const { data, error } = await supabase.from<Order>("orders").select("*");
+      if (error) console.error("Supplier fetch orders error:", error);
+      if (data) setOrders(data);
       setLoading(false);
     };
     fetchOrders();
@@ -24,15 +23,18 @@ export default function SupplierDashboard() {
   const markAsFulfilled = async (orderId: number | string) => {
     const id = Number(orderId);
     const { error } = await supabase
-      .from("orders")
+      .from<Database["public"]["Tables"]["orders"]["Update"]>("orders")
       .update({ status: "fulfilled" } as Partial<OrderUpdate>)
       .eq("id", id);
 
-    if (error) console.error(error);
-    else
-      setOrders((prev) =>
-        prev.map((o) => (Number(o.id) === id ? { ...o, status: "fulfilled" } : o))
-      );
+    if (error) {
+      console.error("markAsFulfilled error:", error);
+      return;
+    }
+
+    setOrders((prev) =>
+      prev.map((o) => (Number(o.id) === id ? { ...o, status: "fulfilled" } : o))
+    );
   };
 
   return (
@@ -49,11 +51,7 @@ export default function SupplierDashboard() {
               <li key={o.id} className="py-2 flex justify-between items-center">
                 <span>
                   Order #{o.id} –{" "}
-                  <span
-                    className={`font-semibold ${
-                      o.status === "fulfilled" ? "text-green-600" : "text-gray-600"
-                    }`}
-                  >
+                  <span className={`font-semibold ${o.status === "fulfilled" ? "text-green-600" : "text-gray-600"}`}>
                     {o.status}
                   </span>
                 </span>

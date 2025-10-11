@@ -1,14 +1,17 @@
 // src/utils/ActivityLogger.ts
 import { supabase } from "../supabaseClient";
-import type { Database } from "../types/supabase";
+import { v4 as uuidv4 } from "uuid";
 
-type ActivityInsert = Database["public"]["Tables"]["activity_log"]["Insert"];
+export async function logBatch(entries: Array<{ user_id?: string | null; user_email?: string | null; action: string }>) {
+  const rows = entries.map((e) => ({
+    id: uuidv4(),
+    user_id: e.user_id ?? null,
+    user_email: e.user_email ?? null,
+    action: e.action,
+    timestamp: new Date().toISOString(),
+  }));
 
-export async function logActivityBatch(entries: ActivityInsert[]) {
-  try {
-    const { error } = await supabase.from("activity_log").insert(entries);
-    if (error) console.error("ActivityLogger insert error:", error);
-  } catch (err) {
-    console.error(err);
-  }
+  const { error } = await supabase.from("activity_log").insert(rows);
+  if (error) console.error("logBatch error:", error);
+  return { error };
 }

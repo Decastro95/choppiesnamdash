@@ -1,4 +1,3 @@
-// src/pages/Dashboard/CashierDashboard.tsx
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import type { Database } from "../../types/supabase";
@@ -17,11 +16,11 @@ export default function CashierDashboard() {
     const fetchProducts = async () => {
       setLoading(true);
       const { data: prodData, error: prodError } = await supabase
-        .from("products")
+        .from<Product>("products")
         .select("*");
 
-      if (prodError) console.error(prodError);
-      if (prodData) setProducts(prodData as Product[]);
+      if (prodError) console.error("fetchProducts error:", prodError);
+      if (prodData) setProducts(prodData);
       setLoading(false);
     };
 
@@ -41,9 +40,11 @@ export default function CashierDashboard() {
 
     cart.forEach((item) => {
       const price = Number((item as any).price) || 0;
+      const name = (item.name || "").toString().toLowerCase();
+
       subtotal += price;
-      if (!ZERO_RATED.includes((item.name || "").toLowerCase())) vat += price * 0.15;
-      if ((item.name || "").toLowerCase().includes("plastic bag")) bagLevy += 1;
+      if (!ZERO_RATED.includes(name)) vat += price * 0.15;
+      if (name.includes("plastic bag")) bagLevy += 1;
     });
 
     const total = subtotal + vat + bagLevy;
@@ -53,19 +54,39 @@ export default function CashierDashboard() {
   const { subtotal, vat, bagLevy, total } = calculateTotals();
 
   const checkout = async () => {
-    for (const item of cart) {
-      const payload: SaleInsert = {
+    if (cart.length === 0) {
+      // eslint-disable-next-line no-alert
+      alert("Cart is empty.");
+      return;
+    }
+
+    // build payloads and insert in one batch
+    const payloads: SaleInsert[] = cart.map((item) => {
+      const name = (item.name || "").toString().toLowerCase();
+      const price = Number((item as any).price) || 0;
+      return {
         product_id: Number(item.id),
         quantity: 1,
-        total_price: Number(item.price),
-        vat_amount: (!ZERO_RATED.includes(item.name.toLowerCase()) ? Number(item.price) * 0.15 : 0),
-        plastic_bag_fee: (item.name.toLowerCase().includes("plastic bag") ? 1 : 0),
+        total_price: price,
+        vat_amount: !["maize meal", "bread", "mahango", "fresh milk"].includes(name)
+          ? Number((price * 0.15).toFixed(2))
+          : 0,
+        plastic_bag_fee: name.includes("plastic bag") ? 1 : 0,
         created_at: new Date().toISOString(),
-      };
+      } as SaleInsert;
+    });
 
-      const { error } = await supabase.from("sales").insert([payload]);
-      if (error) console.error(error);
+    const { error } = await supabase
+      .from<Database["public"]["Tables"]["sales"]["Insert"]>("sales")
+      .insert(payloads);
+
+    if (error) {
+      console.error("checkout insert error:", error);
+      // eslint-disable-next-line no-alert
+      alert("Checkout failed — see console for error.");
+      return;
     }
+
     // eslint-disable-next-line no-alert
     alert(`Sale completed. Total: N$${total.toFixed(2)}`);
     setCart([]);
@@ -83,8 +104,8 @@ export default function CashierDashboard() {
           <ul className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {products.map((p) => (
               <li key={p.id} className="border p-2 rounded bg-white shadow-sm">
-                <div>{p.name}</div>
-                <div className="text-gray-600">N${Number(p.price).toFixed(2)}</div>
+                <div className="font-medium">{p.name}</div>
+                <div className="text-gray-600">N${(Number((p as any).price) || 0).toFixed(2)}</div>
                 <button
                   className="mt-2 px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
                   onClick={() => addToCart(p)}
@@ -99,7 +120,7 @@ export default function CashierDashboard() {
           <ul>
             {cart.map((c) => (
               <li key={c.id} className="flex justify-between items-center border-b py-1">
-                {c.name} - N${Number(c.price).toFixed(2)}
+                <div>{c.name} - N${(Number((c as any).price) || 0).toFixed(2)}</div>
                 <button
                   className="ml-2 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
                   onClick={() => removeFromCart(c.id)}
@@ -115,7 +136,10 @@ export default function CashierDashboard() {
             <p>VAT (15%): N${vat.toFixed(2)}</p>
             <p>Plastic Bag Levy: N${bagLevy.toFixed(2)}</p>
             <p className="font-bold text-lg text-red-700">Total: N${total.toFixed(2)}</p>
-            <button className="mt-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" onClick={checkout}>
+            <button
+              className="mt-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              onClick={checkout}
+            >
               Checkout
             </button>
           </div>

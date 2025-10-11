@@ -19,6 +19,8 @@
     "react-router-dom": "^6.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.19",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.1",
     "@typescript-eslint/eslint-plugin": "^8.45.0",

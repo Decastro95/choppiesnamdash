@@ -1,4 +1,3 @@
-// src/pages/Dashboard/CEODashboard.tsx
 import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import type { Database } from "../../types/supabase";
@@ -15,13 +14,17 @@ export default function CEODashboard() {
     const fetchData = async () => {
       setLoading(true);
 
-      const { data: salesData, error: salesError } = await supabase.from("sales").select("*");
-      if (salesError) console.error(salesError);
-      if (salesData) setSales(salesData as Sale[]);
+      const { data: salesData, error: salesError } = await supabase
+        .from<Sale>("sales")
+        .select("*");
+      if (salesError) console.error("CEO fetch sales error:", salesError);
+      if (salesData) setSales(salesData);
 
-      const { data: productsData, error: prodError } = await supabase.from("products").select("*");
-      if (prodError) console.error(prodError);
-      if (productsData) setProducts(productsData as Product[]);
+      const { data: productsData, error: prodError } = await supabase
+        .from<Product>("products")
+        .select("*");
+      if (prodError) console.error("CEO fetch products error:", prodError);
+      if (productsData) setProducts(productsData);
 
       setLoading(false);
     };
@@ -59,7 +62,7 @@ export default function CEODashboard() {
           <ul>
             {sales.map((s) => (
               <li key={s.id}>
-                Sale ID: {s.id} - Total: N${Number(s.total_price || 0).toFixed(2)}
+                Sale ID: {s.id} - Total: N${(Number(s.total_price || 0)).toFixed(2)}
               </li>
             ))}
           </ul>

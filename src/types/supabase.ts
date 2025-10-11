@@ -1,155 +1,212 @@
-// src/types/supabase.ts
 export type Json =
   | string
   | number
   | boolean
   | null
-  | { [k: string]: Json | undefined }
+  | { [key: string]: Json | undefined }
   | Json[];
 
-export type Database = {
+export interface Database {
   public: {
     Tables: {
+      users: {
+        Row: {
+          id: string;
+          email: string;
+          full_name: string;
+          role: 'admin' | 'ceo' | 'manager' | 'supplier' | 'cashier';
+          password_hash: string | null;
+          created_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          email: string;
+          full_name: string;
+          role: 'admin' | 'ceo' | 'manager' | 'supplier' | 'cashier';
+          password_hash?: string | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          email?: string;
+          full_name?: string;
+          role?: 'admin' | 'ceo' | 'manager' | 'supplier' | 'cashier';
+          password_hash?: string | null;
+          created_at?: string | null;
+        };
+        Relationships: [];
+      };
+
+      activity_log: {
+        Row: {
+          id: number;
+          user_id: string | null;
+          action: string;
+          ip_address: string | null;
+          user_agent: string | null;
+          created_at: string | null;
+        };
+        Insert: {
+          id?: number;
+          user_id?: string | null;
+          action: string;
+          ip_address?: string | null;
+          user_agent?: string | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: number;
+          user_id?: string | null;
+          action?: string;
+          ip_address?: string | null;
+          user_agent?: string | null;
+          created_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'activity_log_user_id_fkey';
+            columns: ['user_id'];
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          }
+        ];
+      };
+
       products: {
         Row: {
           id: number;
           name: string;
+          category: string | null;
+          quantity: number;
           price: number;
-          category?: string | null;
-          quantity?: number | null;
+          supplier_id: string | null;
+          created_at: string | null;
+          updated_at: string | null;
         };
         Insert: {
           id?: number;
           name: string;
-          price: number;
           category?: string | null;
-          quantity?: number | null;
+          quantity?: number;
+          price?: number;
+          supplier_id?: string | null;
+          created_at?: string | null;
+          updated_at?: string | null;
         };
         Update: {
           id?: number;
           name?: string;
-          price?: number;
           category?: string | null;
-          quantity?: number | null;
+          quantity?: number;
+          price?: number;
+          supplier_id?: string | null;
+          created_at?: string | null;
+          updated_at?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: 'products_supplier_id_fkey';
+            columns: ['supplier_id'];
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          }
+        ];
       };
+
       sales: {
         Row: {
           id: number;
           product_id: number;
           quantity: number;
-          total_price: number;
-          vat_amount: number;
-          plastic_bag_fee: number;
-          user_id?: string | null;
-          created_at: string;
+          total: number;
+          cashier_id: string | null;
+          created_at: string | null;
         };
         Insert: {
+          id?: number;
           product_id: number;
-          quantity?: number;
-          total_price: number;
-          vat_amount?: number;
-          plastic_bag_fee?: number;
-          user_id?: string | null;
-          created_at?: string;
+          quantity: number;
+          total?: number;
+          cashier_id?: string | null;
+          created_at?: string | null;
         };
         Update: {
+          id?: number;
           product_id?: number;
           quantity?: number;
-          total_price?: number;
-          vat_amount?: number;
-          plastic_bag_fee?: number;
-          user_id?: string | null;
-          created_at?: string;
+          total?: number;
+          cashier_id?: string | null;
+          created_at?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: 'sales_product_id_fkey';
+            columns: ['product_id'];
+            referencedRelation: 'products';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'sales_cashier_id_fkey';
+            columns: ['cashier_id'];
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          }
+        ];
       };
-      orders: {
+
+      deliveries: {
         Row: {
           id: number;
-          supplier_id?: number | null;
-          status: string;
-          created_at: string;
-        };
-        Insert: {
-          supplier_id?: number | null;
-          status?: string;
-          created_at?: string;
-        };
-        Update: {
-          supplier_id?: number | null;
-          status?: string;
-          created_at?: string;
-        };
-      };
-      users: {
-        Row: {
-          id: string;
-          email: string;
-          role?: string | null;
-        };
-        Insert: {
-          id?: string;
-          email: string;
-          role?: string | null;
-        };
-        Update: {
-          email?: string;
-          role?: string | null;
-        };
-      };
-      activity_log: {
-        Row: {
-          id: string;
-          user_id: string | null;
-          user_email: string | null;
-          action: string;
-          timestamp: string;
-        };
-        Insert: {
-          id?: string;
-          user_id?: string | null;
-          user_email?: string | null;
-          action: string;
-          timestamp?: string;
-        };
-        Update: {
-          user_id?: string | null;
-          user_email?: string | null;
-          action?: string;
-          timestamp?: string;
-        };
-      };
-      roles: {
-        Row: {
-          id: number;
-          name: string;
+          supplier_id: string | null;
+          product_id: number;
+          quantity_delivered: number;
+          delivery_date: string | null;
+          created_at: string | null;
         };
         Insert: {
           id?: number;
-          name: string;
+          supplier_id?: string | null;
+          product_id: number;
+          quantity_delivered: number;
+          delivery_date?: string | null;
+          created_at?: string | null;
         };
         Update: {
           id?: number;
-          name?: string;
+          supplier_id?: string | null;
+          product_id?: number;
+          quantity_delivered?: number;
+          delivery_date?: string | null;
+          created_at?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: 'deliveries_supplier_id_fkey';
+            columns: ['supplier_id'];
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'deliveries_product_id_fkey';
+            columns: ['product_id'];
+            referencedRelation: 'products';
+            referencedColumns: ['id'];
+          }
+        ];
       };
-      shops: {
+    };
+
+    Views: {
+      user_roles: {
         Row: {
-          id: number;
-          name: string;
-        };
-        Insert: {
-          id?: number;
-          name: string;
-        };
-        Update: {
-          name?: string;
+          user_id: string;
+          role: string;
         };
       };
     };
-    Views: {};
+
     Functions: {};
     Enums: {};
     CompositeTypes: {};
   };
-};
+}
