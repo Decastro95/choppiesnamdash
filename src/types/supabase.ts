@@ -1,3 +1,6 @@
+// src/types/supabase.ts
+// ✅ Clean Supabase typings for all your app tables
+
 export type Json =
   | string
   | number
@@ -11,106 +14,42 @@ export interface Database {
     Tables: {
       users: {
         Row: {
-          id: string;
-          email: string;
-          full_name: string;
-          role: 'admin' | 'ceo' | 'manager' | 'supplier' | 'cashier';
-          password_hash: string | null;
+          id: string; // UUID from auth.users
+          email: string | null;
+          role: "admin" | "manager" | "cashier" | "supplier" | "ceo" | null;
+          full_name: string | null;
           created_at: string | null;
         };
         Insert: {
           id?: string;
-          email: string;
-          full_name: string;
-          role: 'admin' | 'ceo' | 'manager' | 'supplier' | 'cashier';
-          password_hash?: string | null;
+          email?: string | null;
+          role?: "admin" | "manager" | "cashier" | "supplier" | "ceo" | null;
+          full_name?: string | null;
           created_at?: string | null;
         };
-        Update: {
-          id?: string;
-          email?: string;
-          full_name?: string;
-          role?: 'admin' | 'ceo' | 'manager' | 'supplier' | 'cashier';
-          password_hash?: string | null;
-          created_at?: string | null;
-        };
-        Relationships: [];
-      };
-
-      activity_log: {
-        Row: {
-          id: number;
-          user_id: string | null;
-          action: string;
-          ip_address: string | null;
-          user_agent: string | null;
-          created_at: string | null;
-        };
-        Insert: {
-          id?: number;
-          user_id?: string | null;
-          action: string;
-          ip_address?: string | null;
-          user_agent?: string | null;
-          created_at?: string | null;
-        };
-        Update: {
-          id?: number;
-          user_id?: string | null;
-          action?: string;
-          ip_address?: string | null;
-          user_agent?: string | null;
-          created_at?: string | null;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'activity_log_user_id_fkey';
-            columns: ['user_id'];
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          }
-        ];
+        Update: Partial<Database["public"]["Tables"]["users"]["Insert"]>;
       };
 
       products: {
         Row: {
           id: number;
           name: string;
-          category: string | null;
-          quantity: number;
+          category?: string | null;
           price: number;
-          supplier_id: string | null;
-          created_at: string | null;
-          updated_at: string | null;
+          quantity: number;
+          supplier_id?: string | null;
+          created_at?: string | null;
         };
         Insert: {
           id?: number;
           name: string;
           category?: string | null;
-          quantity?: number;
-          price?: number;
+          price: number;
+          quantity: number;
           supplier_id?: string | null;
           created_at?: string | null;
-          updated_at?: string | null;
         };
-        Update: {
-          id?: number;
-          name?: string;
-          category?: string | null;
-          quantity?: number;
-          price?: number;
-          supplier_id?: string | null;
-          created_at?: string | null;
-          updated_at?: string | null;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'products_supplier_id_fkey';
-            columns: ['supplier_id'];
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          }
-        ];
+        Update: Partial<Database["public"]["Tables"]["products"]["Insert"]>;
       };
 
       sales: {
@@ -118,95 +57,48 @@ export interface Database {
           id: number;
           product_id: number;
           quantity: number;
-          total: number;
-          cashier_id: string | null;
-          created_at: string | null;
+          total_price: number;
+          vat_amount?: number | null;
+          plastic_bag_fee?: number | null;
+          payment_method: "cash" | "credit_card" | "loyalty_card";
+          customer_name?: string | null;
+          customer_id_number?: string | null;
+          user_id?: string | null;
+          created_at?: string | null;
         };
         Insert: {
           id?: number;
           product_id: number;
           quantity: number;
-          total?: number;
-          cashier_id?: string | null;
+          total_price: number;
+          vat_amount?: number | null;
+          plastic_bag_fee?: number | null;
+          payment_method: "cash" | "credit_card" | "loyalty_card";
+          customer_name?: string | null;
+          customer_id_number?: string | null;
+          user_id?: string | null;
           created_at?: string | null;
         };
-        Update: {
-          id?: number;
-          product_id?: number;
-          quantity?: number;
-          total?: number;
-          cashier_id?: string | null;
-          created_at?: string | null;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'sales_product_id_fkey';
-            columns: ['product_id'];
-            referencedRelation: 'products';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'sales_cashier_id_fkey';
-            columns: ['cashier_id'];
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          }
-        ];
+        Update: Partial<Database["public"]["Tables"]["sales"]["Insert"]>;
       };
 
-      deliveries: {
+      activity_log: {
         Row: {
-          id: number;
-          supplier_id: string | null;
-          product_id: number;
-          quantity_delivered: number;
-          delivery_date: string | null;
-          created_at: string | null;
+          id: string;
+          user_uuid?: string | null; // references auth.users.id
+          user_email?: string | null;
+          action: string;
+          timestamp: string | null;
         };
         Insert: {
-          id?: number;
-          supplier_id?: string | null;
-          product_id: number;
-          quantity_delivered: number;
-          delivery_date?: string | null;
-          created_at?: string | null;
+          id?: string;
+          user_uuid?: string | null;
+          user_email?: string | null;
+          action: string;
+          timestamp?: string | null;
         };
-        Update: {
-          id?: number;
-          supplier_id?: string | null;
-          product_id?: number;
-          quantity_delivered?: number;
-          delivery_date?: string | null;
-          created_at?: string | null;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'deliveries_supplier_id_fkey';
-            columns: ['supplier_id'];
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'deliveries_product_id_fkey';
-            columns: ['product_id'];
-            referencedRelation: 'products';
-            referencedColumns: ['id'];
-          }
-        ];
+        Update: Partial<Database["public"]["Tables"]["activity_log"]["Insert"]>;
       };
     };
-
-    Views: {
-      user_roles: {
-        Row: {
-          user_id: string;
-          role: string;
-        };
-      };
-    };
-
-    Functions: {};
-    Enums: {};
-    CompositeTypes: {};
   };
 }
