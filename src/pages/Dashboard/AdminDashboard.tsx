@@ -42,11 +42,15 @@ export default function AdminDashboard() {
       const product = products.find((p) => Number(p.id) === Number(sale.product_id));
       if (!product) return;
       const price = Number((product as any).price) || 0;
-      subtotal += price;
+      const quantity = Number(sale.quantity) || 1;
+      const lineItemTotal = price * quantity;
+      subtotal += lineItemTotal;
       if (!ZERO_RATED.includes((product.name || "").toLowerCase())) {
-        vat += price * 0.15;
+        vat += lineItemTotal * 0.15;
       }
-      if ((product.name || "").toLowerCase().includes("plastic bag")) bagLevy += 1;
+      if ((product.name || "").toLowerCase().includes("plastic bag")) {
+        bagLevy += 1 * quantity;
+      }
     });
 
     return { subtotal, vat, bagLevy, total: subtotal + vat + bagLevy };
