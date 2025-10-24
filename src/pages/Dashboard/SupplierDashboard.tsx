@@ -1,72 +1,56 @@
-import { useEffect, useState } from "react";
+// src/pages/Dashboard/SupplierDashboard.tsx
+import React, { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import type { Database } from "../../types/supabase";
 
 type Order = Database["public"]["Tables"]["orders"]["Row"];
-type OrderUpdate = Database["public"]["Tables"]["orders"]["Update"];
 
 export default function SupplierDashboard() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchOrders = async () => {
+    (async () => {
       setLoading(true);
-      const { data, error } = await supabase.from<Order>("orders").select("*");
-      if (error) console.error("Supplier fetch orders error:", error);
-      if (data) setOrders(data);
+      const { data } = await supabase.from("purchase_orders").select("*");
+      if (data) setOrders(data as any);
       setLoading(false);
-    };
-    fetchOrders();
+    })();
   }, []);
 
-  const markAsFulfilled = async (orderId: number | string) => {
-    const id = Number(orderId);
-    const { error } = await supabase
-      .from<Database["public"]["Tables"]["orders"]["Update"]>("orders")
-      .update({ status: "fulfilled" } as Partial<OrderUpdate>)
-      .eq("id", id);
-
-    if (error) {
-      console.error("markAsFulfilled error:", error);
-      return;
-    }
-
-    setOrders((prev) =>
-      prev.map((o) => (Number(o.id) === id ? { ...o, status: "fulfilled" } : o))
-    );
+  const markFulfilled = async (id: number) => {
+    const { error } = await supabase.from("purchase_orders").update({ status: "fulfilled" }).eq("id", id);
+    if (error) console.error(error);
+    setOrders((prev) => prev.map((o) => (o.id === id ? { ...o, status: "fulfilled" } : o)));
   };
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4 text-red-700">Supplier Dashboard</h1>
+      <div className="app-header card mb-4">
+        <h1 className="text-lg font-bold">Supplier Dashboard</h1>
+      </div>
 
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <>
-          <h2 className="text-xl font-semibold mb-2">Orders</h2>
-          <ul className="divide-y divide-gray-200">
+        <div className="card">
+          <h2 className="font-semibold mb-2">Purchase Orders</h2>
+          <ul>
             {orders.map((o) => (
               <li key={o.id} className="py-2 flex justify-between items-center">
-                <span>
-                  Order #{o.id} –{" "}
-                  <span className={`font-semibold ${o.status === "fulfilled" ? "text-green-600" : "text-gray-600"}`}>
-                    {o.status}
-                  </span>
-                </span>
+                <div>
+                  <div className="font-medium">{o.order_number}</div>
+                  <div className="text-sm text-gray-500">{o.status}</div>
+                </div>
                 {o.status !== "fulfilled" && (
-                  <button
-                    className="ml-2 px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-                    onClick={() => markAsFulfilled(o.id)}
-                  >
-                    Mark Fulfilled
+                  <button className="px-3 py-1 bg-green-600 text-white rounded" onClick={() => markFulfilled(o.id)}>
+                    Mark fulfilled
                   </button>
                 )}
               </li>
             ))}
           </ul>
-        </>
+        </div>
       )}
     </div>
   );

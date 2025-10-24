@@ -1,28 +1,21 @@
+// src/utils/logActivity.ts
 import { supabase } from "../supabaseClient";
 
-export async function logActivity(
-  username: string,
-  role: string,
-  action: string,
-  details?: string
-) {
+export async function logActivity(entry: {
+  user_id: string | null;
+  action: string;
+  details: string;
+}) {
   try {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    const { error } = await supabase.from("activity_log").insert([
+    await supabase.from("activity_log").insert([
       {
-        user_id: user?.id || null,
-        username,
-        role,
-        action,
-        details,
+        user_id: entry.user_id,
+        action: entry.action,
+        details: entry.details,
+        timestamp: new Date().toISOString(),
       },
     ]);
-
-    if (error) console.error("Failed to log activity:", error.message);
-  } catch (err) {
-    console.error("Unexpected logging error:", err);
+  } catch (error) {
+    console.error("logActivity error:", error);
   }
 }

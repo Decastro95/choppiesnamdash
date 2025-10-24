@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+// src/pages/Dashboard/CEODashboard.tsx
+import React, { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import type { Database } from "../../types/supabase";
 
@@ -11,61 +12,43 @@ export default function CEODashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       setLoading(true);
-
-      const { data: salesData, error: salesError } = await supabase
-        .from<Sale>("sales")
-        .select("*");
-      if (salesError) console.error("CEO fetch sales error:", salesError);
-      if (salesData) setSales(salesData);
-
-      const { data: productsData, error: prodError } = await supabase
-        .from<Product>("products")
-        .select("*");
-      if (prodError) console.error("CEO fetch products error:", prodError);
-      if (productsData) setProducts(productsData);
-
+      const { data: s } = await supabase.from("sales").select("*");
+      const { data: p } = await supabase.from("products").select("*");
+      if (s) setSales(s as Sale[]);
+      if (p) setProducts(p as Product[]);
       setLoading(false);
-    };
-
-    fetchData();
+    })();
   }, []);
 
-  const calculateVAT = (amount: number) => amount * 0.15;
-  const calculatePlasticBagLevy = (items: Product[]) => {
-    const bagCount = items.filter((p) => (p.name || "").toLowerCase().includes("plastic bag")).length;
-    return bagCount * 1;
-  };
-
-  const totalRevenue = sales.reduce((sum, s) => sum + Number(s.total_price || 0), 0);
-  const vatTotal = calculateVAT(totalRevenue);
-  const bagLevy = calculatePlasticBagLevy(products);
+  const revenue = sales.reduce((acc, x) => acc + Number(x.total_price ?? x.price ?? 0), 0);
+  const vat = revenue * 0.15;
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">CEO Dashboard</h1>
-      {loading && <p>Loading...</p>}
+      <div className="app-header card mb-4">
+        <h1 className="text-lg font-bold">CEO Dashboard</h1>
+      </div>
 
-      {!loading && (
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
         <>
-          <h2 className="text-xl font-semibold mb-2">Total Revenue</h2>
-          <p>N${totalRevenue.toFixed(2)}</p>
-
-          <h2 className="text-xl font-semibold mb-2">VAT Collected (15%)</h2>
-          <p>N${vatTotal.toFixed(2)}</p>
-
-          <h2 className="text-xl font-semibold mb-2">Plastic Bag Levy</h2>
-          <p>N${bagLevy.toFixed(2)}</p>
-
-          <h2 className="text-xl font-semibold mb-2">Sales Details</h2>
-          <ul>
-            {sales.map((s) => (
-              <li key={s.id}>
-                Sale ID: {s.id} - Total: N${(Number(s.total_price || 0)).toFixed(2)}
-              </li>
-            ))}
-          </ul>
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="card">
+              <h3 className="font-semibold">Total Revenue</h3>
+              <div className="text-2xl font-bold">N${revenue.toFixed(2)}</div>
+            </div>
+            <div className="card">
+              <h3 className="font-semibold">VAT Projection</h3>
+              <div className="text-2xl font-bold">N${vat.toFixed(2)}</div>
+            </div>
+            <div className="card">
+              <h3 className="font-semibold">Products</h3>
+              <div>{products.length} total</div>
+            </div>
+          </div>
         </>
       )}
     </div>

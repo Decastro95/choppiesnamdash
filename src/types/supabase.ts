@@ -1,104 +1,177 @@
 // src/types/supabase.ts
-// ✅ Clean Supabase typings for all your app tables
-
 export type Json =
   | string
   | number
   | boolean
   | null
-  | { [key: string]: Json | undefined }
+  | { [k: string]: Json | undefined }
   | Json[];
 
-export interface Database {
+/**
+ * Minimal Database type focused on tables used by the dashboards.
+ * Extend as needed (matches your Supabase schema in conversation).
+ */
+export type Database = {
   public: {
     Tables: {
-      users: {
-        Row: {
-          id: string; // UUID from auth.users
-          email: string | null;
-          role: "admin" | "manager" | "cashier" | "supplier" | "ceo" | null;
-          full_name: string | null;
-          created_at: string | null;
-        };
-        Insert: {
-          id?: string;
-          email?: string | null;
-          role?: "admin" | "manager" | "cashier" | "supplier" | "ceo" | null;
-          full_name?: string | null;
-          created_at?: string | null;
-        };
-        Update: Partial<Database["public"]["Tables"]["users"]["Insert"]>;
-      };
-
       products: {
         Row: {
           id: number;
+          product_id: string | null;
           name: string;
-          category?: string | null;
-          price: number;
-          quantity: number;
-          supplier_id?: string | null;
-          created_at?: string | null;
+          price: number | null; // ensure price exists in DB or adapt
+          category_id: number | null;
+          quantity: number | null;
+          vat_rate: number | null;
         };
         Insert: {
-          id?: number;
+          product_id?: string | null;
           name: string;
-          category?: string | null;
-          price: number;
-          quantity: number;
-          supplier_id?: string | null;
-          created_at?: string | null;
+          price?: number | null;
+          category_id?: number | null;
+          quantity?: number | null;
+          vat_rate?: number | null;
         };
-        Update: Partial<Database["public"]["Tables"]["products"]["Insert"]>;
+        Update: {
+          product_id?: string | null;
+          name?: string;
+          price?: number | null;
+          category_id?: number | null;
+          quantity?: number | null;
+          vat_rate?: number | null;
+        };
       };
-
       sales: {
         Row: {
           id: number;
-          product_id: number;
+          product_id: number | null;
+          shop_id: number | null;
           quantity: number;
-          total_price: number;
-          vat_amount?: number | null;
-          plastic_bag_fee?: number | null;
-          payment_method: "cash" | "credit_card" | "loyalty_card";
-          customer_name?: string | null;
-          customer_id_number?: string | null;
-          user_id?: string | null;
-          created_at?: string | null;
+          price: number;
+          total_price: number | null;
+          payment_method: "cash" | "credit_card" | "loyalty_card" | null;
+          customer_name: string | null;
+          loyalty_card_number: string | null;
+          created_at: string;
         };
         Insert: {
-          id?: number;
-          product_id: number;
-          quantity: number;
-          total_price: number;
-          vat_amount?: number | null;
-          plastic_bag_fee?: number | null;
-          payment_method: "cash" | "credit_card" | "loyalty_card";
+          product_id: number | null;
+          shop_id?: number | null;
+          quantity?: number;
+          price: number;
+          total_price?: number | null;
+          payment_method?: "cash" | "credit_card" | "loyalty_card" | null;
           customer_name?: string | null;
-          customer_id_number?: string | null;
-          user_id?: string | null;
-          created_at?: string | null;
+          loyalty_card_number?: string | null;
+          created_at?: string;
         };
-        Update: Partial<Database["public"]["Tables"]["sales"]["Insert"]>;
+        Update: {
+          product_id?: number | null;
+          shop_id?: number | null;
+          quantity?: number;
+          price?: number;
+          total_price?: number | null;
+          payment_method?: "cash" | "credit_card" | "loyalty_card" | null;
+          customer_name?: string | null;
+          loyalty_card_number?: string | null;
+          created_at?: string;
+        };
       };
-
+      users: {
+        Row: {
+          id: number;
+          shop_id?: number | null;
+          role_id?: number | null;
+          email: string;
+          password?: string | null;
+          auth_user_id?: string | null; // uuid
+        };
+        Insert: {
+          shop_id?: number | null;
+          role_id?: number | null;
+          email: string;
+          password?: string | null;
+          auth_user_id?: string | null;
+        };
+        Update: {
+          shop_id?: number | null;
+          role_id?: number | null;
+          email?: string;
+          password?: string | null;
+          auth_user_id?: string | null;
+        };
+      };
+      orders: {
+        Row: {
+          id: number;
+          supplier_id?: number | null;
+          status: string;
+          created_at: string;
+        };
+        Insert: {
+          supplier_id?: number | null;
+          status?: string;
+          created_at?: string;
+        };
+        Update: {
+          supplier_id?: number | null;
+          status?: string;
+          created_at?: string;
+        };
+      };
       activity_log: {
         Row: {
-          id: string;
-          user_uuid?: string | null; // references auth.users.id
-          user_email?: string | null;
+          id: number;
+          user_id?: string | null; // uuid
+          username?: string | null;
+          role?: string | null;
           action: string;
-          timestamp: string | null;
+          details?: string | null;
+          timestamp: string;
         };
         Insert: {
-          id?: string;
-          user_uuid?: string | null;
-          user_email?: string | null;
+          user_id?: string | null;
+          username?: string | null;
+          role?: string | null;
           action: string;
-          timestamp?: string | null;
+          details?: string | null;
+          timestamp?: string;
         };
-        Update: Partial<Database["public"]["Tables"]["activity_log"]["Insert"]>;
+        Update: {
+          user_id?: string | null;
+          username?: string | null;
+          role?: string | null;
+          action?: string;
+          details?: string | null;
+          timestamp?: string;
+        };
       };
+      loyalty_cards: {
+        Row: {
+          id: number;
+          card_number: string;
+          customer_name?: string | null;
+          points: number;
+          created_at: string;
+        };
+        Insert: {
+          card_number: string;
+          customer_name?: string | null;
+          points?: number;
+          created_at?: string;
+        };
+        Update: {
+          card_number?: string;
+          customer_name?: string | null;
+          points?: number;
+          created_at?: string;
+        };
+      };
+      // add other tables as needed...
     };
+    Views: {};
+    Functions: {};
+    Enums: {};
+    CompositeTypes: {};
   };
-}
+};

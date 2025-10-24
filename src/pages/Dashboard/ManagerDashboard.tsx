@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+// src/pages/Dashboard/ManagerDashboard.tsx
+import React, { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import type { Database } from "../../types/supabase";
+import { exportToCSV } from "../../utils/exportHelpers";
 
 type Product = Database["public"]["Tables"]["products"]["Row"];
 type Sale = Database["public"]["Tables"]["sales"]["Row"];
@@ -10,75 +12,55 @@ export default function ManagerDashboard() {
   const [sales, setSales] = useState<Sale[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const ZERO_RATED = ["maize meal", "bread", "mahango", "fresh milk"];
-
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       setLoading(true);
-      const { data: prodData, error: prodError } = await supabase
-        .from<Product>("products")
-        .select("*");
-      if (prodError) console.error("Manager fetch products error:", prodError);
-      if (prodData) setProducts(prodData);
-
-      const { data: salesData, error: salesError } = await supabase
-        .from<Sale>("sales")
-        .select("*");
-      if (salesError) console.error("Manager fetch sales error:", salesError);
-      if (salesData) setSales(salesData);
-
+      const { data: p } = await supabase.from("products").select("*");
+      const { data: s } = await supabase.from("sales").select("*");
+      if (p) setProducts(p as Product[]);
+      if (s) setSales(s as Sale[]);
       setLoading(false);
-    };
-
-    fetchData();
+    })();
   }, []);
 
-  const calculateTotals = () => {
-    let subtotal = 0;
-    let vat = 0;
-    let bagLevy = 0;
-
-    sales.forEach((sale) => {
-      const product = products.find((p) => Number(p.id) === Number(sale.product_id));
-      if (!product) return;
-      const price = Number((product as any).price) || 0;
-      subtotal += price;
-      if (!ZERO_RATED.includes((product.name || "").toLowerCase())) {
-        vat += price * 0.15;
-      }
-      if ((product.name || "").toLowerCase().includes("plastic bag")) bagLevy += 1;
-    });
-
-    return { subtotal, vat, bagLevy, total: subtotal + vat + bagLevy };
-  };
-
-  const { subtotal, vat, bagLevy, total } = calculateTotals();
+  async function promoteProduct(productId: number) {
+    // manager permission assumed on backend; here we open a quick prompt to set discount flag in promotions table
+    const percent = prompt("Set discount % for promotion (e.g. 10 for 10%)");
+    const p = Number(percent);
+    if (!isFinite(p)) return;
+    await supabase.from("promotions").insert([{ product_id: productId, discount_percentage: p }]);
+    alert("Promotion created (if manager has permission)");
+  }
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Manager Dashboard</h1>
-      {loading && <p>Loading data...</p>}
+      <div className="app-header card mb-4">
+        <h1 className="text-lg font-bold">Manager Dashboard</h1>
+      </div>
 
-      {!loading && (
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
         <>
-          <h2 className="text-xl font-semibold mb-2">Sales Overview</h2>
-          <ul>
-            {sales.map((s) => {
-              const product = products.find((p) => Number(p.id) === Number(s.product_id));
-              const price = product ? Number((product as any).price) || 0 : 0;
-              return (
-                <li key={s.id}>
-                  {product?.name || "Unknown"} - N${price.toFixed(2)}
-                </li>
-              );
-            })}
-          </ul>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="card">
+              <h2 className="font-semibold">Products</h2>
+              <ul>
+                {products.map((p) => (
+                  <li key={p.id} className="py-1 flex justify-between">
+                    <span>{p.name} — N${Number(p.price ?? 0).toFixed(2)}</span>
+                    <div className="flex gap-2">
+                      <button className="px-2 py-1 border rounded" onClick={() => promoteProduct(p.id)}>Promote</button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div className="mt-4">
-            <p>Subtotal: N${subtotal.toFixed(2)}</p>
-            <p>VAT (15%): N${vat.toFixed(2)}</p>
-            <p>Plastic Bag Levy: N${bagLevy.toFixed(2)}</p>
-            <p className="font-bold">Total Sales: N${total.toFixed(2)}</p>
+            <div className="card">
+              <h2 className="font-semibold">Sales (Export)</h2>
+              <button className="py-2 w-full rounded" onClick={() => exportToCSV(sales, "shop-sales.csv")}>Export sales CSV</button>
+            </div>
           </div>
         </>
       )}

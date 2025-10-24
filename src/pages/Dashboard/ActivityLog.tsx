@@ -1,71 +1,47 @@
 // src/pages/Dashboard/ActivityLog.tsx
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
+import type { Database } from "../../types/supabase";
+import { exportToCSV } from "../../utils/exportHelpers";
 
-type LogRow = {
-  id: string;
-  user_id: string | null;
-  user_email: string | null;
-  action: string;
-  timestamp: string;
-};
+type Log = Database["public"]["Tables"]["activity_log"]["Row"];
 
-export default function ActivityLog() {
-  const [logs, setLogs] = useState<LogRow[]>([]);
+export default function ActivityLogPage() {
+  const [logs, setLogs] = useState<Log[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetch = async () => {
+    (async () => {
       setLoading(true);
-      try {
-        const { data, error } = await supabase
-          .from("activity_log")
-          .select("*")
-          .order("timestamp", { ascending: false })
-          .limit(200);
-
-        if (error) throw error;
-        setLogs((data ?? []) as LogRow[]);
-      } catch (err) {
-        console.error("Failed to fetch logs:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetch();
+      const { data } = await supabase.from("activity_log").select("*").order("timestamp", { ascending: false }).limit(200);
+      if (data) setLogs(data as Log[]);
+      setLoading(false);
+    })();
   }, []);
 
   return (
-    <div className="p-4 min-h-screen bg-gray-50">
-      <h1 className="text-2xl font-bold mb-4 text-gray-800">Activity Log</h1>
+    <div className="p-4">
+      <div className="app-header card mb-4">
+        <h1 className="text-lg font-bold">Activity Log</h1>
+      </div>
 
-      {loading ? (
-        <p>Loading logs...</p>
-      ) : logs.length === 0 ? (
-        <p className="text-gray-500">No activity recorded yet.</p>
-      ) : (
-        <div className="overflow-auto">
-          <table className="min-w-full bg-white rounded shadow">
-            <thead className="bg-gray-200 text-left">
-              <tr>
-                <th className="px-4 py-2">User</th>
-                <th className="px-4 py-2">Action</th>
-                <th className="px-4 py-2">Timestamp</th>
-              </tr>
-            </thead>
-            <tbody>
-              {logs.map((l) => (
-                <tr key={l.id} className="border-b hover:bg-gray-50">
-                  <td className="px-4 py-2">{l.user_email ?? l.user_id ?? "Unknown"}</td>
-                  <td className="px-4 py-2">{l.action}</td>
-                  <td className="px-4 py-2">{new Date(l.timestamp).toLocaleString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div className="card">
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="font-semibold">Recent activity</h2>
+          <div className="flex gap-2">
+            <button className="py-2 px-3 border rounded" onClick={() => exportToCSV(logs, "activity.csv")}>Export CSV</button>
+          </div>
         </div>
-      )}
+        <ul>
+          {logs.map((l) => (
+            <li key={l.id} className="py-2 border-b">
+              <div className="text-sm">{l.action}</div>
+              <div className="text-xs text-gray-500">{l.username ?? l.user_id} — {new Date(l.timestamp).toLocaleString()}</div>
+              {l.details && <div className="text-xs text-gray-700 mt-1">{l.details}</div>}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

@@ -1,11 +1,10 @@
-// src/pages/Dashboard/ProtectedRoute.tsx
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  allowedRoles?: string[];
+  allowedRoles: string[];
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles }) => {
@@ -13,42 +12,46 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchRole = async () => {
-      setLoading(true);
-      const { data, error } = await supabase.auth.getUser();
-      if (error || !data?.user) {
+    const getRole = async () => {
+      try {
+        const {
+          data: { user },
+          error: userError,
+        } = await supabase.auth.getUser();
+
+        if (userError || !user) {
+          setUserRole(null);
+          setLoading(false);
+          return;
+        }
+
+        const { data: profile, error: profileError } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+
+        if (profileError || !profile) {
+          console.error("Role fetch error:", profileError);
+          setUserRole(null);
+        } else {
+          setUserRole(profile.role);
+        }
+      } catch (err) {
+        console.error("Unexpected Supabase error:", err);
         setUserRole(null);
+      } finally {
         setLoading(false);
-        return;
       }
-
-      // Attempt to read role from user_metadata or your users table
-      const metadataRole = (data.user.user_metadata as any)?.role;
-      if (typeof metadataRole === "string") {
-        setUserRole(metadataRole.toLowerCase());
-        setLoading(false);
-        return;
-      }
-
-      // fallback: query our "users" table (if you maintain it)
-      const { data: userRow } = await supabase
-        .from("users")
-        .select("role")
-        .eq("email", data.user.email ?? "")
-        .maybeSingle();
-
-      const roleFromRow = (userRow as any)?.role;
-      setUserRole(typeof roleFromRow === "string" ? roleFromRow.toLowerCase() : null);
-      setLoading(false);
     };
 
-    fetchRole();
+    getRole();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (allowedRoles && !allowedRoles.includes(userRole ?? "")) {
-    return <Navigate to="/unauthorized" replace />;
-  }
+  if (loading) return <div className="text-center mt-8">Loading...</div>;
+
+  if (!userRole) return <Navigate to="/login" replace />;
+  if (!allowedRoles.includes(userRole)) return <Navigate to="/unauthorized" replace />;
 
   return <>{children}</>;
 };
