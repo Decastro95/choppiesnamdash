@@ -13,7 +13,7 @@ export default function ActivityLogPage() {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const { data } = await supabase.from("activity_log").select("*").order("timestamp", { ascending: false }).limit(200);
+      const { data } = await supabase.from("activity_log").select("*").order("created_at", { ascending: false }).limit(200);
       if (data) setLogs(data as Log[]);
       setLoading(false);
     })();
@@ -36,7 +36,7 @@ export default function ActivityLogPage() {
           {logs.map((l) => (
             <li key={l.id} className="py-2 border-b">
               <div className="text-sm">{l.action}</div>
-              <div className="text-xs text-gray-500">{l.username ?? l.user_id} — {new Date(l.timestamp).toLocaleString()}</div>
+              <div className="text-xs text-gray-500">{l.user_id ?? "System"} — {new Date(l.created_at).toLocaleString()}</div>
               {l.details && <div className="text-xs text-gray-700 mt-1">{l.details}</div>}
             </li>
           ))}

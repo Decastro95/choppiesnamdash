@@ -3,38 +3,72 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --choppies-red: #d62828;
-  --card-bg: #ffffff;
-  --page-bg: #f3f4f6;
+@layer base {
+  :root {
+    --choppies-red: #dc2626;
+    --choppies-green: #059669;
+    --card-bg: #ffffff;
+    --page-bg: #f9fafb;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  }
 }
 
-body {
-  background: var(--page-bg);
-  color: #0f172a;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer components {
+  /* Legacy card styles for backwards compatibility */
+  .app-header {
+    background: linear-gradient(to right, var(--choppies-red), #b91c1c);
+    @apply text-white p-5 rounded-xl shadow-lg;
+  }
+
+  .card {
+    @apply bg-white rounded-xl p-6 shadow-md;
+  }
+
+  .btn-primary {
+    background-color: var(--choppies-green);
+    @apply text-white font-semibold px-6 py-3 rounded-lg transition-colors;
+  }
+
+  .btn-primary:hover {
+    background-color: #047857;
+  }
+
+  .btn-secondary {
+    background-color: var(--choppies-red);
+    @apply text-white font-semibold px-6 py-3 rounded-lg transition-colors;
+  }
+
+  .btn-secondary:hover {
+    background-color: #b91c1c;
+  }
 }
 
-/* header style for the red banner look */
-.app-header {
-  background: linear-gradient(180deg, var(--choppies-red), #b32121);
-  color: white;
-  padding: 1rem 1.25rem;
-  border-radius: 0.75rem;
-}
+@layer utilities {
+  .text-choppies-red {
+    color: var(--choppies-red);
+  }
 
-/* card */
-.card {
-  background: var(--card-bg);
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-}
+  .text-choppies-green {
+    color: var(--choppies-green);
+  }
 
-/* small tweaks */
-.btn-primary {
-  background-color: var(--choppies-red);
-  color: #fff;
+  .bg-choppies-red {
+    background-color: var(--choppies-red);
+  }
+
+  .bg-choppies-green {
+    background-color: var(--choppies-green);
+  }
+
+  .border-choppies-red {
+    border-color: var(--choppies-red);
+  }
+
+  .border-choppies-green {
+    border-color: var(--choppies-green);
+  }
 }

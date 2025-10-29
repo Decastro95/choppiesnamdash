@@ -26,8 +26,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
         }
 
         const { data: profile, error: profileError } = await supabase
-          .from("profiles")
-          .select("role")
+          .from("users")
+          .select("role_id, roles(name)")
           .eq("id", user.id)
           .single();
 
@@ -35,7 +35,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
           console.error("Role fetch error:", profileError);
           setUserRole(null);
         } else {
-          setUserRole(profile.role);
+          const roleName = (profile as any).roles?.name;
+          setUserRole(roleName || null);
         }
       } catch (err) {
         console.error("Unexpected Supabase error:", err);

@@ -15,7 +15,7 @@ export default function ActivityLogDashboard() {
       const { data, error } = await supabase
         .from("activity_log")
         .select("*")
-        .order("timestamp", { ascending: false });
+        .order("created_at", { ascending: false });
 
       if (error) {
         console.error("Error loading activity logs:", error);
@@ -58,12 +58,12 @@ export default function ActivityLogDashboard() {
               ) : (
                 logs.map((log) => (
                   <tr key={log.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="py-2 px-4 border-b">{log.username}</td>
-                    <td className="py-2 px-4 border-b">{log.role}</td>
+                    <td className="py-2 px-4 border-b">{log.user_id ?? "System"}</td>
+                    <td className="py-2 px-4 border-b">-</td>
                     <td className="py-2 px-4 border-b text-blue-700">{log.action}</td>
                     <td className="py-2 px-4 border-b text-gray-700">{log.details}</td>
                     <td className="py-2 px-4 border-b text-gray-500">
-                      {new Date(log.timestamp).toLocaleString()}
+                      {new Date(log.created_at).toLocaleString()}
                     </td>
                   </tr>
                 ))

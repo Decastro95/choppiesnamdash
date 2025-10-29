@@ -26,10 +26,10 @@ export default function LoginPage() {
       return;
     }
 
-    // Fetch user role from 'users' table
+    // Fetch user role from 'users' table with role name
     const { data: profile, error: profileError } = await supabase
       .from("users")
-      .select("role")
+      .select("role_id, roles(name)")
       .eq("id", data.user.id)
       .single();
 
@@ -39,8 +39,10 @@ export default function LoginPage() {
       return;
     }
 
+    const roleName = (profile as any).roles?.name;
+
     // Redirect based on role
-    switch (profile.role) {
+    switch (roleName) {
       case "admin":
         navigate("/admin");
         break;

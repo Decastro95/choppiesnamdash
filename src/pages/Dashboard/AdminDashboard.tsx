@@ -2,6 +2,9 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/supabaseClient";
 import ExportSection from "@/components/ExportSection";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
+import ChoppiesHeader from "@/components/ChoppiesHeader";
+import { Package } from "lucide-react";
 
 
 export default function AdminDashboard() {
@@ -20,32 +23,53 @@ export default function AdminDashboard() {
   const rows = products.map((p) => [p.name, p.category, p.price, p.stock]);
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold text-red-700 mb-4">Admin Dashboard</h1>
-      <div className="overflow-x-auto bg-white p-4 rounded-lg shadow">
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="bg-gray-100 text-gray-700">
-              {columns.map((c) => (
-                <th key={c} className="p-2 border">{c}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((p, i) => (
-              <tr key={i} className="hover:bg-gray-50">
-                <td className="p-2 border">{p.name}</td>
-                <td className="p-2 border">{p.category}</td>
-                <td className="p-2 border">N${p.price}</td>
-                <td className="p-2 border">{p.stock}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="min-h-screen bg-gray-50 p-6">
+      <ChoppiesHeader
+        title="Admin Dashboard"
+        subtitle="System Administration & Product Management"
+      />
 
-      {/* ✅ Export Section */}
-      <ExportSection role={role} data={products} columns={columns} rows={rows} title="Products" />
+      <div className="space-y-6">
+        <Card>
+          <CardHeader variant="red">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-white flex items-center gap-2">
+                <Package className="w-6 h-6" />
+                Products Catalog
+              </CardTitle>
+              <span className="bg-white text-choppies-red px-4 py-2 rounded-full text-sm font-bold">
+                {products.length} total products
+              </span>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="bg-gray-100 text-gray-700 border-b-2 border-choppies-red">
+                    {columns.map((c) => (
+                      <th key={c} className="p-3 text-left font-semibold">{c}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {products.map((p, i) => (
+                    <tr key={i} className="hover:bg-gray-50 border-b transition-colors">
+                      <td className="p-3 font-medium text-gray-900">{p.name}</td>
+                      <td className="p-3 text-gray-600">{p.category}</td>
+                      <td className="p-3 font-semibold text-choppies-green">N${p.price}</td>
+                      <td className="p-3 text-gray-600">{p.stock}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Export Section */}
+        <ExportSection role={role} data={products} columns={columns} rows={rows} title="Products" />
+      </div>
     </div>
   );
 }

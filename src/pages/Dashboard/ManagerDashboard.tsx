@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import type { Database } from "../../types/supabase";
 import { exportToCSV } from "../../utils/exportHelpers";
+import { Card, CardHeader, CardTitle, CardContent } from "../../components/ui/Card";
+import ChoppiesHeader from "../../components/ChoppiesHeader";
+import { Tag, Download } from "lucide-react";
 
 type Product = Database["public"]["Tables"]["products"]["Row"];
 type Sale = Database["public"]["Tables"]["sales"]["Row"];
@@ -33,36 +36,79 @@ export default function ManagerDashboard() {
   }
 
   return (
-    <div className="p-4">
-      <div className="app-header card mb-4">
-        <h1 className="text-lg font-bold">Manager Dashboard</h1>
-      </div>
+    <div className="min-h-screen bg-gray-50 p-6">
+      <ChoppiesHeader
+        title="Manager Dashboard"
+        subtitle="Product & Promotions Management"
+      />
 
       {loading ? (
-        <p>Loading...</p>
+        <div className="flex items-center justify-center h-64">
+          <div className="text-choppies-green text-lg font-semibold">Loading inventory...</div>
+        </div>
       ) : (
-        <>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="card">
-              <h2 className="font-semibold">Products</h2>
-              <ul>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Products Management */}
+          <Card>
+            <CardHeader variant="red">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Tag className="w-5 h-5" />
+                  Products Catalog
+                </CardTitle>
+                <span className="bg-white text-choppies-red px-3 py-1 rounded-full text-sm font-bold">
+                  {products.length} items
+                </span>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2 max-h-96 overflow-y-auto">
                 {products.map((p) => (
-                  <li key={p.id} className="py-1 flex justify-between">
-                    <span>{p.name} — N${Number(p.price ?? 0).toFixed(2)}</span>
-                    <div className="flex gap-2">
-                      <button className="px-2 py-1 border rounded" onClick={() => promoteProduct(p.id)}>Promote</button>
+                  <div key={p.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                    <div>
+                      <div className="font-medium text-gray-900">{p.name}</div>
+                      <div className="text-sm text-choppies-green font-semibold">N${Number(p.price ?? 0).toFixed(2)}</div>
                     </div>
-                  </li>
+                    <button
+                      className="px-4 py-2 bg-choppies-green text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
+                      onClick={() => promoteProduct(p.id)}
+                    >
+                      Promote
+                    </button>
+                  </div>
                 ))}
-              </ul>
-            </div>
+              </div>
+            </CardContent>
+          </Card>
 
-            <div className="card">
-              <h2 className="font-semibold">Sales (Export)</h2>
-              <button className="py-2 w-full rounded" onClick={() => exportToCSV(sales, "shop-sales.csv")}>Export sales CSV</button>
-            </div>
-          </div>
-        </>
+          {/* Sales Export */}
+          <Card>
+            <CardHeader variant="red">
+              <CardTitle className="text-white flex items-center gap-2">
+                <Download className="w-5 h-5" />
+                Sales Export
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-gray-50 rounded-lg p-6 text-center">
+                <div className="text-4xl font-bold text-choppies-red mb-2">{sales.length}</div>
+                <div className="text-gray-600">Total Sales Transactions</div>
+              </div>
+
+              <button
+                className="w-full py-3 bg-choppies-green text-white rounded-lg hover:bg-green-700 transition-colors font-semibold flex items-center justify-center gap-2"
+                onClick={() => exportToCSV(sales, "shop-sales.csv")}
+              >
+                <Download className="w-5 h-5" />
+                Export Sales to CSV
+              </button>
+
+              <div className="text-sm text-gray-500 text-center">
+                Download complete sales history for analysis and reporting
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       )}
     </div>
   );

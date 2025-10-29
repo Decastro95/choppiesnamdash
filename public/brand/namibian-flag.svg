@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+  <!-- Blue diagonal stripe -->
+  <rect width="900" height="600" fill="#003580"/>
+
+  <!-- Red diagonal stripe -->
+  <path d="M 0 0 L 900 600 L 900 450 L 0 0 Z" fill="#C8102E"/>
+
+  <!-- Green diagonal stripe -->
+  <path d="M 0 150 L 900 600 L 0 600 Z" fill="#009543"/>
+
+  <!-- White borders for diagonal stripe -->
+  <path d="M 0 0 L 900 600 L 900 570 L 30 0 Z" fill="#FFFFFF"/>
+  <path d="M 0 30 L 870 600 L 900 600 L 0 0 Z" fill="#FFFFFF"/>
+  <path d="M 0 120 L 900 570 L 900 600 L 0 150 Z" fill="#FFFFFF"/>
+  <path d="M 0 150 L 0 180 L 900 600 L 870 600 Z" fill="#FFFFFF"/>
+
+  <!-- Sun circle -->
+  <circle cx="150" cy="150" r="60" fill="#FFCE00"/>
+
+  <!-- Sun rays (simplified) -->
+  <g fill="#FFCE00">
+    <polygon points="150,90 155,110 145,110"/>
+    <polygon points="210,150 190,155 190,145"/>
+    <polygon points="150,210 155,190 145,190"/>
+    <polygon points="90,150 110,155 110,145"/>
+  </g>
+</svg>

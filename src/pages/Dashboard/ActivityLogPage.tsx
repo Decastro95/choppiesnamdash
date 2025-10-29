@@ -13,7 +13,7 @@ export default function ActivityLogPage() {
       const { data, error } = await supabase
         .from("activity_log")
         .select("*")
-        .order("timestamp", { ascending: false });
+        .order("created_at", { ascending: false });
       if (error) console.error(error);
       if (data) setLogs(data);
       setLoading(false);
@@ -30,9 +30,9 @@ export default function ActivityLogPage() {
         <ul className="divide-y divide-gray-200">
           {logs.map((log) => (
             <li key={log.id} className="py-2">
-              <strong>{log.username || "Unknown User"}</strong> — {log.action} <br />
+              <strong>{log.user_id || "System"}</strong> — {log.action} <br />
               <span className="text-sm text-gray-500">
-                {new Date(log.timestamp).toLocaleString()}
+                {new Date(log.created_at).toLocaleString()}
               </span>
             </li>
           ))}
