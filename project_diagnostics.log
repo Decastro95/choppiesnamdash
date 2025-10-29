@@ -1,9 +1,0 @@
-==== Checking for Common Project Errors in choppiesnamdash ====
-Checking npm install...
-npm install successful ✅
-Checking TypeScript compilation...
-TypeScript errors found ❌ (see ts_errors.log)
-Checking Vite build...
-Vite build successful ✅
-Supabase environment variables not set ❌
-==== Error Check Complete ====
