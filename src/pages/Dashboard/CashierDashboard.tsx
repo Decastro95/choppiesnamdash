@@ -64,7 +64,7 @@ export default function CashierDashboard() {
     // log activity (auth user uuid if available)
     const { data: user } = await supabase.auth.getUser();
     await logActivity({
-      user_id: user?.data?.user?.id ?? null,
+      user_id: user?.user?.id ?? null,
       action: "checkout",
       details: `Cashier completed sale ${cart.length} items, total ${total}`,
     });

@@ -39,7 +39,7 @@ export default function SupplierDashboard() {
             {orders.map((o) => (
               <li key={o.id} className="py-2 flex justify-between items-center">
                 <div>
-                  <div className="font-medium">{o.order_number}</div>
+                  <div className="font-medium">{o.id}</div>
                   <div className="text-sm text-gray-500">{o.status}</div>
                 </div>
                 {o.status !== "fulfilled" && (

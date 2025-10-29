@@ -30,7 +30,7 @@ export default function ActivityLogPage() {
         <ul className="divide-y divide-gray-200">
           {logs.map((log) => (
             <li key={log.id} className="py-2">
-              <strong>{log.user_email || "Unknown User"}</strong> — {log.action} <br />
+              <strong>{log.username || "Unknown User"}</strong> — {log.action} <br />
               <span className="text-sm text-gray-500">
                 {new Date(log.timestamp).toLocaleString()}
               </span>

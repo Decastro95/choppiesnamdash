@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/supabaseClient";
 import ExportSection from "@/components/ExportSection";
 
+
 export default function AdminDashboard() {
   const [products, setProducts] = useState<any[]>([]);
   const role = "admin";
